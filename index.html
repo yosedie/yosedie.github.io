@@ -1,396 +1,434 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
+<html lang="en"> <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yosedie - Software Developer</title>
+    <title>Yosedie's Profile - Software Developer</title> <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Dasar - Anda bisa memindahkannya ke file style.css terpisah */
         body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-            scroll-behavior: smooth; /* Untuk scrolling yang halus saat klik navigasi */
+            font-family: 'Inter', sans-serif;
+            background-color: #FAF7F2; /* Warm Neutral Background */
+            color: #4A4A4A; /* Dark Gray Text */
         }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            overflow: hidden;
-            padding: 0 20px;
+        .accent-color {
+            color: #3B82F6; /* Subtle Blue Accent */
         }
-
-        /* Header & Navigasi */
-        header {
-            background: #333;
-            color: #fff;
-            padding-top: 30px;
-            min-height: 70px;
-            border-bottom: #0779e4 3px solid;
-            position: sticky; /* Membuat navigasi tetap di atas saat scroll */
-            top: 0;
-            z-index: 1000;
+        .bg-accent-color {
+            background-color: #3B82F6;
         }
-
-        header a {
-            color: #fff;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-size: 16px;
+        .sidebar-link.active {
+            background-color: #DBEAFE; /* Lighter blue for active link */
+            color: #1E40AF; /* Darker blue for active text */
+            font-weight: 600;
         }
-
-        header ul {
-            padding: 0;
-            list-style: none;
-            text-align: center;
+        .content-section {
+            padding-top: 4rem; 
+            min-height: calc(100vh - 4rem); /* Fallback for browsers not supporting dvh */
+            min-height: calc(100dvh - 4rem); /* Dynamic viewport height */
         }
-
-        header li {
-            display: inline;
-            padding: 0 20px 0 20px;
+        .card {
+            background-color: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
-        header #branding {
-            float: left;
-            margin-top: -10px; /* Sesuaikan agar sejajar dengan nav */
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-
-        header #branding h1 {
-            margin: 0;
-            font-size: 24px;
+        details > summary {
+            cursor: pointer;
+            padding: 0.75rem 1rem;
+            background-color: #F3F4F6;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+            list-style: none; /* Remove default marker */
         }
-
-        header nav {
-            float: right;
-            margin-top: 0px; /* Sesuaikan agar sejajar */
+        details > summary::-webkit-details-marker { /* Hide marker in WebKit */
+            display: none;
         }
-
-        /* Hero Section (Beranda) */
-        #hero {
-            min-height: 400px;
-            background: url('https://via.placeholder.com/1500x600?text=Placeholder+Background+Image') no-repeat 0 -200px; /* Ganti dengan gambar background Anda */
-            background-size: cover;
-            text-align: center;
-            color: #fff; /* Ubah warna teks jika background Anda gelap */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        #hero h1 {
-            font-size: 55px;
-            margin-bottom: 10px;
-            color: #333; /* Ganti jika background Anda berbeda */
-        }
-
-        #hero p {
-            font-size: 20px;
-            color: #555; /* Ganti jika background Anda berbeda */
-        }
-
-        .hero-cta {
+        details > summary::before { /* Custom marker */
+            content: '▶ ';
+            margin-right: 0.5rem;
             display: inline-block;
-            margin-top: 20px;
-            padding: 10px 25px;
-            background: #0779e4;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 18px;
+            transition: transform 0.2s ease-in-out;
         }
-        .hero-cta:hover {
-            background: #045aa0;
+        details[open] > summary::before {
+            transform: rotate(90deg);
         }
-
-        /* Section Styling Umum */
-        section {
-            padding: 40px 0;
-            border-bottom: 1px #ddd solid;
+        details > summary:hover {
+            background-color: #E5E7EB;
         }
-        section:last-child {
-            border-bottom: none;
+        details[open] > summary {
+            background-color: #DBEAFE;
         }
-        section h2 {
-            text-align: center;
-            font-size: 32px;
-            margin-bottom: 30px;
-            color: #333;
-        }
-
-        /* About Section */
-        #about img.profile-pic {
-            display: block;
-            width: 150px; /* Sesuaikan ukuran */
-            height: 150px;
-            border-radius: 50%; /* Membuat gambar bulat */
-            margin: 0 auto 20px auto;
-            object-fit: cover; /* Memastikan gambar tidak terdistorsi */
-        }
-        #about p {
-            text-align: justify; /* Atau 'left' atau 'center' sesuai preferensi */
-            font-size: 18px; /* Tambahkan ukuran font jika diperlukan */
-            max-width: 800px; /* Batasi lebar teks untuk keterbacaan */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; 
             margin-left: auto;
             margin-right: auto;
+            height: 300px; 
+            max-height: 400px;
         }
-
-
-        /* Skills Section */
-        #skills ul {
-            list-style: none;
-            padding: 0;
-            display: flex; /* Menggunakan flexbox untuk tata letak */
-            flex-wrap: wrap; /* Membungkus item jika tidak cukup ruang */
-            justify-content: center; /* Menengahkan item */
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
         }
-
-        #skills li {
-            background: #0779e4;
-            color: #fff;
-            padding: 8px 15px;
-            margin: 5px;
-            border-radius: 5px;
-            font-size: 16px;
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-
-        /* Portfolio Section */
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Grid responsif */
-            gap: 20px;
+        ::-webkit-scrollbar-track {
+            background: #FAF7F2; 
         }
-
-        .project-card {
-            background: #fff;
-            padding: 20px;
-            border: 1px #ccc solid;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        ::-webkit-scrollbar-thumb {
+            background: #D1D5DB; 
+            border-radius: 4px;
         }
-
-        .project-card img {
-            width: 100%;
-            max-height: 200px; /* Batasi tinggi gambar */
-            object-fit: cover; /* Pastikan gambar tidak terdistorsi */
-            border-bottom: 1px #eee solid;
-            margin-bottom: 15px;
-            border-radius: 5px 5px 0 0;
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9CA3AF; 
         }
-
-        .project-card h3 {
-            margin-top: 0;
-            color: #0779e4;
+        .devicon-badge {
+            transition: opacity 0.3s ease;
         }
-
-        .project-card a.project-link {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 15px;
-            background: #333;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 3px;
-        }
-        .project-card a.project-link:hover {
-            background: #555;
-        }
-
-        /* Contact Section */
-        #contact form {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 5px;
-        }
-        #contact label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        #contact input[type="text"],
-        #contact input[type="email"],
-        #contact textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px #ccc solid;
-            box-sizing: border-box; /* Agar padding tidak menambah lebar */
-        }
-        #contact textarea {
-            height: 100px;
-        }
-        #contact button[type="submit"] {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            border: none;
-            background: #0779e4;
-            color: #fff;
-            font-size: 18px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #contact button[type="submit"]:hover {
-            background: #045aa0;
-        }
-        .social-links {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .social-links a {
-            margin: 0 10px;
-            text-decoration: none;
-            font-size: 24px; /* Ukuran ikon sosial media */
-            color: #333;
-        }
-        .social-links a:hover {
-            color: #0779e4;
-        }
-
-
-        /* Footer */
-        footer {
-            padding: 20px;
-            margin-top: 20px;
-            color: #fff;
-            background-color: #333;
-            text-align: center;
+        .devicon-badge:hover {
+            opacity: 0.75;
         }
     </style>
 </head>
-<body>
-    <header>
-        <div class="container">
-            <div id="branding">
-                <h1><a href="#hero">Yosedie</a></h1> </div>
-            <nav>
-                <ul>
-                    <li><a href="#hero">Beranda</a></li>
-                    <li><a href="#about">Tentang Saya</a></li>
-                    <li><a href="#skills">Keahlian</a></li>
-                    <li><a href="#portfolio">Portofolio</a></li>
-                    <li><a href="#contact">Kontak</a></li>
-                </ul>
-            </nav>
+<body class="flex antialiased">
+
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-30 w-64 bg-white shadow-lg p-6 space-y-4 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out overflow-y-auto">
+        <h1 class="text-2xl font-bold accent-color mb-6">Yosedie</h1>
+        <nav class="space-y-2">
+            <a href="#hero" class="sidebar-link block px-4 py-2.5 rounded-lg hover:bg-gray-100 transition-colors">Home</a> <a href="#about" class="sidebar-link block px-4 py-2.5 rounded-lg hover:bg-gray-100 transition-colors">About Me</a> <a href="#skills" class="sidebar-link block px-4 py-2.5 rounded-lg hover:bg-gray-100 transition-colors">Technologies & Skills</a> <a href="#projects" class="sidebar-link block px-4 py-2.5 rounded-lg hover:bg-gray-100 transition-colors">Featured Projects</a> <a href="#stats" class="sidebar-link block px-4 py-2.5 rounded-lg hover:bg-gray-100 transition-colors">GitHub Stats</a> <a href="#experience" class="sidebar-link block px-4 py-2.5 rounded-lg hover:bg-gray-100 transition-colors">Work Experience</a> <a href="#learning" class="sidebar-link block px-4 py-2.5 rounded-lg hover:bg-gray-100 transition-colors">Currently Learning</a> <a href="#certifications" class="sidebar-link block px-4 py-2.5 rounded-lg hover:bg-gray-100 transition-colors">Certifications</a> <a href="#contributions" class="sidebar-link block px-4 py-2.5 rounded-lg hover:bg-gray-100 transition-colors">Open Source Contributions</a> <a href="#connect" class="sidebar-link block px-4 py-2.5 rounded-lg hover:bg-gray-100 transition-colors">Contact Me</a> </nav>
+        <div class="pt-6 mt-auto">
+             <img src="https://komarev.com/ghpvc/?username=yosedie&label=Profile%20views&color=0e75b6&style=flat-square&logo=github" class="mx-auto rounded" alt="profile views" onerror="this.style.display='none'"/>
         </div>
-    </header>
+    </aside>
 
-    <section id="hero">
-        <h1>Hai, Saya Yosedie!</h1>
-        <p>Seorang Software Developer yang antusias dalam [Sebutkan 1-2 Hal Utama, misal: membangun aplikasi web inovatif dan solusi berbasis cloud].</p>
-        <p>Selamat datang di portofolio online saya. Mari lihat lebih dekat apa yang telah saya kerjakan.</p>
-        <a href="#portfolio" class="hero-cta">Lihat Proyek Saya</a>
-    </section>
+    <button id="mobileMenuButton" class="md:hidden fixed top-4 left-4 z-40 p-2 bg-white rounded-md shadow-md text-gray-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+    </button>
 
-    <section id="about" class="container">
-        <h2>Tentang Saya</h2>
-        <img src="https://via.placeholder.com/150?text=Foto+Yosedie" alt="Foto Yosedie" class="profile-pic"> <p>
-            Saya adalah seorang pengembang perangkat lunak yang bersemangat dengan pengalaman dalam [Sebutkan Teknologi Utama, misal: Python, JavaScript, dan Java]. Saya memiliki ketertarikan mendalam pada [Sebutkan Bidang Minat, misal: pengembangan full-stack, arsitektur microservices, dan machine learning].
-        </p>
-        <p>
-            Perjalanan saya di dunia teknologi dimulai dari [Ceritakan sedikit awal mula ketertarikan Anda]. Sejak saat itu, saya terus belajar dan beradaptasi dengan perkembangan teknologi, selalu berusaha untuk menciptakan solusi yang tidak hanya fungsional tetapi juga efisien dan memberikan dampak positif. Saya percaya bahwa kolaborasi dan pembelajaran berkelanjutan adalah kunci untuk berkembang di industri ini.
-        </p>
-        <p>
-            Di luar coding, saya menikmati [Sebutkan hobi atau minat Anda, misal: membaca buku tentang teknologi terkini, berkontribusi pada proyek open-source, atau bermain musik].
-        </p>
-    </section>
+    <main class="flex-1 md:ml-64 p-6 md:p-10 overflow-y-auto">
+        <section id="hero" class="content-section min-h-screen flex flex-col justify-center items-center text-center bg-gradient-to-br from-blue-100 via-indigo-50 to-pink-50 rounded-xl shadow-lg">
+            <div class="max-w-3xl mx-auto px-4">
+                <h2 class="text-5xl md:text-6xl font-bold mb-4">👋 Hello, I'm Yosedie!</h2> <p class="text-xl md:text-2xl text-gray-700 mb-8">Welcome to my GitHub profile! I am a passionate software developer dedicated to creating exciting and impactful projects. I thrive on continuous learning and exploring new frontiers in technology.</p> <a href="#about" class="bg-accent-color text-white font-semibold px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors text-lg">Learn More</a> </div>
+        </section>
 
-    <section id="skills" class="container">
-        <h2>Keahlian & Teknologi</h2>
-        <ul>
-            <li>Python</li>
-            <li>JavaScript (ES6+)</li>
-            <li>Java</li>
-            <li>C++</li>
-            <li>React</li>
-            <li>Node.js</li>
-            <li>Express.js</li>
-            <li>Spring Boot (jika relevan)</li>
-            <li>MySQL</li>
-            <li>MongoDB</li>
-            <li>Git & GitHub</li>
-            <li>Docker</li>
-            <li>Jenkins</li>
-            <li>Google Cloud Platform (GCP)</li>
-            <li>HTML5 & CSS3</li>
-            <li>RESTful APIs</li>
-            <li>Agile Methodologies</li>
-            </ul>
-    </section>
-
-    <section id="portfolio" class="container">
-        <h2>Portofolio Proyek</h2>
-        <div class="project-grid">
-            <div class="project-card">
-                <img src="https://via.placeholder.com/400x200?text=Screenshot+Proyek+Framework" alt="Web Programming Framework"> <h3>Web Programming Framework E-Commerce</h3>
-                <p>
-                    Sebuah framework berbasis [Node.js/React atau teknologi utama lainnya] yang dirancang untuk mempercepat pengembangan aplikasi e-commerce kustom untuk pasar nasional.
-                </p>
-                <p><strong>Teknologi:</strong> Node.js, React, MongoDB, Docker</p>
-                <a href="https://github.com/yosedie/framework-project" target="_blank" class="project-link">Lihat di GitHub</a>
+        <section id="about" class="content-section py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold mb-8 text-center accent-color">🚀 About Me</h2> <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+                    <p class="text-lg mb-6 leading-relaxed">I am a software developer with a strong foundation in building robust and scalable applications. My journey in technology is driven by a love for problem-solving and a desire to contribute to innovative solutions. I'm always excited to connect with fellow developers, collaborate on interesting projects, and discuss the latest advancements in the tech world.</p> <ul class="list-disc list-inside space-y-3 text-lg text-gray-700">
+                        <li>🔭 I’m currently working on enhancing my e-commerce web application for "new nasional" and exploring new features.</li> <li>🌱 I’m currently deepening my knowledge in advanced algorithms, data structures, machine learning, AI, and DevOps practices.</li> <li>👯 I’m looking to collaborate on open-source projects, especially those involving Python, JavaScript, or cloud technologies.</li> <li>🤔 I’m looking for help with advanced machine learning implementations.</li> <li>💬 Ask me about Python, JavaScript, React, Node.js, or Google Cloud Platform.</li> <li>📫 How to reach me: Check out the "Contact Me" section below!</li> <li>⚡ Fun fact: I believe every line of code has a story to tell.</li> </ul>
                 </div>
+            </div>
+        </section>
 
-            <div class="project-card">
-                <img src="https://via.placeholder.com/400x200?text=Screenshot+Proyek+Lain" alt="Nama Proyek Lain"> <h3>[Nama Proyek Anda Lainnya]</h3>
-                <p>
-                    [Deskripsi singkat proyek ini, tujuannya, dan apa yang membuatnya menarik. Jelaskan kontribusi Anda jika ini proyek tim.]
-                </p>
-                <p><strong>Teknologi:</strong> [Sebutkan teknologi utama proyek ini, misal: Python, Django, PostgreSQL]</p>
-                <a href="[LINK_GITHUB_PROYEK_LAIN]" target="_blank" class="project-link">Lihat di GitHub</a>
+        <section id="skills" class="content-section py-16 bg-gray-50 rounded-xl shadow-inner">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold mb-12 text-center accent-color">🛠️ Technologies & Skills</h2> <p class="text-center text-lg mb-10 max-w-2xl mx-auto">Here are the primary languages, frameworks, databases, tools, and cloud platforms I work with. Badges are a great visual way to quickly convey technical expertise.</p> <div class="mb-16">
+                    <h3 class="text-2xl font-semibold mb-6 text-center text-gray-800">Skill Distribution</h3> <div class="chart-container bg-white p-4 rounded-lg shadow">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                    <p class="text-sm text-gray-600 text-center mt-3">A visualization of my skill categories.</p> </div>
+
+                <div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-700">Programming Languages:</h3> <div class="flex flex-wrap gap-4 items-center">
+                            <a href="https://www.python.org" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="Python" width="40" height="40" class="devicon-badge"/></a>
+                            <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="JavaScript" width="40" height="40" class="devicon-badge"/></a>
+                            <a href="https://www.java.com" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original-wordmark.svg" alt="Java" width="40" height="40" class="devicon-badge"/></a>
+                            <a href="https://isocpp.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" alt="C++" width="40" height="40" class="devicon-badge"/></a>
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-700">Frameworks & Libraries:</h3> <div class="flex flex-wrap gap-4 items-center">
+                            <a href="https://reactjs.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="React" width="40" height="40" class="devicon-badge"/></a>
+                            <a href="https://nodejs.org" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="Node.js" width="40" height="40" class="devicon-badge"/></a>
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-700">Databases:</h3> <div class="flex flex-wrap gap-4 items-center">
+                            <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="MySQL" width="40" height="40" class="devicon-badge"/></a>
+                            <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="MongoDB" width="40" height="40" class="devicon-badge"/></a>
+                        </div>
+                    </div>
+
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-4 text-gray-700">Tools:</h3> <div class="flex flex-wrap gap-4 items-center">
+                            <a href="https://git-scm.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original-wordmark.svg" alt="Git" width="40" height="40" class="devicon-badge"/></a>
+                            <a href="https://www.docker.com/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="Docker" width="40" height="40" class="devicon-badge"/></a>
+                            <a href="https://www.jenkins.io" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/jenkins/jenkins-original.svg" alt="Jenkins" width="40" height="40" class="devicon-badge"/></a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4 text-gray-700">Cloud:</h3> <div class="flex flex-wrap gap-4 items-center">
+                            <a href="https://cloud.google.com" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/googlecloud/googlecloud-original.svg" alt="Google Cloud Platform" width="40" height="40" class="devicon-badge"/></a>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </section>
 
-            <div class="project-card">
-                 <img src="https://via.placeholder.com/400x200?text=Screenshot+Proyek+Ketiga" alt="Nama Proyek Ketiga"> <h3>[Nama Proyek Ketiga Anda]</h3>
-                <p>
-                    [Deskripsi singkat proyek ketiga. Fokus pada masalah yang dipecahkan atau fitur unggulan.]
-                </p>
-                <p><strong>Teknologi:</strong> [Sebutkan teknologi utama proyek ini, misal: Java, Android Studio, Firebase]</p>
-                <a href="[LINK_GITHUB_PROYEK_KETIGA]" target="_blank" class="project-link">Lihat di GitHub</a>
-                 </div>
-        </div>
-    </section>
+        <section id="projects" class="content-section py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold mb-12 text-center accent-color">🌟 Featured Projects</h2> <p class="text-center text-lg mb-10 max-w-2xl mx-auto">Here are some projects I'm most proud of or that best represent my skills. Each project repository contains a detailed `README.md`.</p> <div class="grid md:grid-cols-2 lg:grid-cols-1 gap-8">
+                    <div class="card rounded-xl shadow-lg overflow-hidden">
+                        <img src="https://placehold.co/600x300/DBEAFE/1E40AF?text=E-commerce+App" alt="Web Framework E-commerce Application" class="w-full h-56 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x300/DBEAFE/1E40AF?text=Project+Image+Unavailable';"> <div class="p-6">
+                            <h3 class="text-2xl font-semibold mb-3">Web Framework E-commerce Application</h3> <p class="text-gray-700 mb-2 text-sm"><strong>Description:</strong> This project is an e-commerce web application built as part of my software development endeavor, aimed at the "new nasional" market.</p> <p class="text-gray-700 mb-2 text-sm"><strong>Problem Solved:</strong> (Fill in with the specific problem this application solves)</p> <p class="text-gray-700 mb-2 text-sm"><strong>Technologies Used:</strong> React, Node.js, MongoDB (Example)</p> <div class="mb-3">
+                                <strong class="text-sm text-gray-700">Key Features:</strong> <ul class="list-disc list-inside text-sm text-gray-600 ml-4">
+                                    <li>User authentication and management.</li> <li>Product catalog and search functionality.</li> <li>Shopping cart and checkout process.</li> <li></li> </ul>
+                            </div>
+                            <p class="text-gray-700 mb-4 text-sm"><strong>My Contributions:</strong> As the lead developer, I was responsible for designing the database schema, developing backend APIs using Node.js and Express, and implementing the frontend user interface with React. </p> <div class="flex flex-wrap gap-3">
+                                <a href="https://github.com/yosedie/framework-project" target="_blank" rel="noopener noreferrer" class="inline-block bg-accent-color text-white px-5 py-2 rounded-md hover:bg-blue-700 transition-colors text-sm">View on GitHub</a> <a href="#" class="inline-block bg-gray-600 text-white px-5 py-2 rounded-md hover:bg-gray-700 transition-colors text-sm">(Live Demo - if available)</a> </div>
+                        </div>
+                    </div>
+                    
+<!--                     <div class="card rounded-xl shadow-lg overflow-hidden">
+                        <img src="https://placehold.co/600x300/E0F2FE/0891B2?text=Data+Analysis+Project" alt="Sales Data Analysis Project" class="w-full h-56 object-cover" onerror="this.onerror=null; this.src='https://placehold.co/600x300/E0F2FE/0891B2?text=Project+Image+Unavailable';"> <div class="p-6">
+                            <h3 class="text-2xl font-semibold mb-3">Sales Data Analysis Project</h3> <p class="text-gray-700 mb-2 text-sm"><strong>Description:</strong> In-depth analysis of historical sales data to identify trends and insights.</p> <p class="text-gray-700 mb-2 text-sm"><strong>Problem Solved:</strong> Provided data-driven recommendations for future sales strategies.</p> <p class="text-gray-700 mb-2 text-sm"><strong>Technologies Used:</strong> Python, Pandas, Matplotlib, Jupyter Notebook</p> <div class="mb-3">
+                                <strong class="text-sm text-gray-700">Key Features/Analyses:</strong> <ul class="list-disc list-inside text-sm text-gray-600 ml-4">
+                                    <li>Data cleaning and preprocessing.</li> <li>Monthly and yearly sales trend analysis.</li> <li>Visualization of best-selling products and customer segments.</li> </ul>
+                            </div>
+                            <p class="text-gray-700 mb-4 text-sm"><strong>My Contributions:</strong> Performed the entire data analysis cycle, from data collection to presenting findings.</p> <div class="flex flex-wrap gap-3">
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="inline-block bg-accent-color text-white px-5 py-2 rounded-md hover:bg-blue-700 transition-colors text-sm">(GitHub Project Link)</a> </div>
+                        </div>
+                    </div> -->
 
-    <section id="contact" class="container">
-        <h2>Hubungi Saya</h2>
-        <p style="text-align:center;">Saya selalu terbuka untuk diskusi, peluang kolaborasi, atau sekadar bertukar pikiran. Jangan ragu untuk menghubungi saya!</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="stats" class="content-section py-16 bg-gray-50 rounded-xl shadow-inner">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold mb-12 text-center accent-color">📈 GitHub Stats & Activity</h2> <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <img src="https://github-readme-stats.vercel.app/api?username=yosedie&show_icons=true&theme=radical&count_private=true&hide_title=false&card_width=450" alt="Yosedie's GitHub Stats" class="mx-auto rounded-lg shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/450x195/FFF/4A4A4A?text=GitHub+Stats+Unavailable'; this.alt='GitHub Stats Unavailable';"> <p class="mt-2 text-sm text-gray-600">General GitHub contribution statistics.</p> </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=yosedie&layout=compact&theme=radical&hide_border=false&card_width=450" alt="Top Languages" class="mx-auto rounded-lg shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/450x195/FFF/4A4A4A?text=Top+Languages+Unavailable'; this.alt='Top Languages Unavailable';"> <p class="mt-2 text-sm text-gray-600">My most frequently used languages.</p> </div>
+                     <div class="md:col-span-2 bg-white p-6 rounded-xl shadow-lg text-center">
+                        <img src="https://streak-stats.demolab.com/?user=yosedie&theme=radical&hide_border=false&card_width=450" alt="GitHub Streak" class="mx-auto rounded-lg shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/450x80/FFF/4A4A4A?text=Streak+Stats+Unavailable'; this.alt='Streak Stats Unavailable';"> <p class="mt-2 text-sm text-gray-600">My daily contribution streak.</p> </div>
+                    <div class="md:col-span-2 bg-white p-6 rounded-xl shadow-lg text-center">
+                        <img src="https://github-profile-trophy.vercel.app/?username=yosedie&theme=radical&column=7&margin-w=15&margin-h=15&no-bg=true&no-frame=true" alt="GitHub Trophies" class="mx-auto" onerror="this.onerror=null; this.src='https://placehold.co/600x150/FFF/4A4A4A?text=GitHub+Trophies+Unavailable'; this.alt='GitHub Trophies Unavailable';"> <p class="mt-2 text-sm text-gray-600">Some of the trophies I've earned on GitHub.</p> </div>
+                </div>
+                 <p class="text-center text-sm text-gray-500 mt-8">These statistics are dynamically updated from third-party services.</p> </div>
+        </section>
+
+        <section id="experience" class="content-section py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold mb-12 text-center accent-color">💼 Work Experience</h2> <p class="text-center text-lg mb-10 max-w-2xl mx-auto">Check My Linkedin...</p> <div class="max-w-3xl mx-auto space-y-6">
+<!--                     <details class="bg-white rounded-lg shadow">
+                        <summary class="text-xl">Your Job Title | Company Name | Month Year - Month Year (or Present)</summary> <div class="p-6 border-t border-gray-200">
+                            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                <li>Key responsibility or achievement. (Example: "Led the development of a new feature that increased user engagement by 15%.")</li> <li>Another key responsibility or achievement. (Example: "Collaborated with a team of X developers to deliver Y project on time.")</li> <li>Technologies used: (Example: Python, Django, AWS)</li> </ul>
+                        </div>
+                    </details>
+                     <details class="bg-white rounded-lg shadow">
+                        <summary class="text-xl">Previous Job Title | Previous Company Name | Month Year - Month Year</summary> <div class="p-6 border-t border-gray-200">
+                            <ul class="list-disc list-inside space-y-2 text-gray-700">
+                                <li>Key responsibility or achievement.</li> <li>Another key responsibility or achievement.</li> <li>Technologies used:</li> </ul>
+                        </div>
+                    </details> -->
+                </div>
+            </div>
+        </section>
+
+        <section id="learning" class="content-section py-16 bg-gray-50 rounded-xl shadow-inner">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold mb-12 text-center accent-color">🌱 Currently Learning</h2> <p class="text-center text-lg mb-10 max-w-2xl mx-auto">I'm a firm believer in lifelong learning and continuously strive to expand my skill set. Here's what I'm focusing on right now:</p> <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg space-y-6">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800">Advanced Algorithms and Data Structures</h3> <p class="text-gray-700 leading-relaxed">Deepening my understanding to write more efficient and scalable code.</p> <em class="text-sm text-gray-500 block mt-1">Related mini-project: <a href="#" class="accent-color hover:underline">[Algorithm Visualizer]</a> (Example link)</em> </div>
+                    <hr class="my-4 border-gray-200">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800">Machine Learning and Artificial Intelligence</h3> <p class="text-gray-700 leading-relaxed">Exploring core concepts and practical applications.</p> <em class="text-sm text-gray-500 block mt-1">Learning: Completing Andrew Ng's Machine Learning course on Coursera (Example)</em> </div>
+                     <hr class="my-4 border-gray-200">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800">DevOps Practices and Tools</h3> <p class="text-gray-700 leading-relaxed">Mastering tools like Kubernetes and improving my understanding of CI/CD pipelines for robust deployment strategies.</p> </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications" class="content-section py-16">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold mb-12 text-center accent-color">🏅 Certifications</h2> <p class="text-center text-lg mb-10 max-w-2xl mx-auto">In My Linkedin...</p> <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg space-y-4">
+<!--                     <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                        <strong class="text-gray-700">[Certification Name]</strong> - Issuing Organization <a href="#" class="text-sm bg-accent-color text-white px-3 py-1 rounded-md hover:bg-blue-700 transition-colors">[Verify]</a> </div>
+                    <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                        <strong class="text-gray-700">[Another Certification Name]</strong> - Issuing Organization <a href="#" class="text-sm bg-accent-color text-white px-3 py-1 rounded-md hover:bg-blue-700 transition-colors">[Verify]</a> </div>
+                     <p class="text-sm text-gray-500 mt-4 text-center">You can use GitHub Actions like `pemtajo/badge-readme` to dynamically display Credly badges.</p> </div> -->
+            </div>
+        </section>
         
-        <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST"> <div>
-                <label for="name">Nama:</label>
-                <input type="text" id="name" name="name" required>
+        <section id="contributions" class="content-section py-16 bg-gray-50 rounded-xl shadow-inner">
+            <div class="container mx-auto px-4">
+                <h2 class="text-4xl font-bold mb-12 text-center accent-color">🔗 Open Source Contributions</h2> <p class="text-center text-lg mb-10 max-w-2xl mx-auto">Coming Soon...</p> <div class="max-w-3xl mx-auto bg-white p-8 rounded-xl shadow-lg space-y-6">
+<!--                     <div>
+                        <h3 class="text-2xl font-semibold text-gray-800">Project Name: <a href="#" target="_blank" rel="noopener noreferrer" class="accent-color hover:underline">[Link to Project]</a></h3> <p class="text-gray-700 mt-1"><strong>My Contribution:</strong> (Example: "Fixed a critical bug related to X" or "Implemented Y feature").</p> <p class="text-gray-700 mt-1"><strong>Impact:</strong> (Example: "Improved performance by X%" or "Enhanced user experience for Y module").</p> </div>
+                     <hr class="my-4 border-gray-200">
+                     <div>
+                        <h3 class="text-2xl font-semibold text-gray-800">Another Project Name: <a href="#" target="_blank" rel="noopener noreferrer" class="accent-color hover:underline">[Link to Project]</a></h3> <p class="text-gray-700 mt-1"><strong>My Contribution:</strong> Brief description of contribution.</p> <p class="text-gray-700 mt-1"><strong>Impact:</strong> Explain the impact of your contribution.</p> </div>
+                    <p class="text-sm text-gray-500 mt-4 text-center">Consider using OpenSauced Dev Cards to dynamically showcase your open source impact.</p> </div> -->
             </div>
-            <div>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div>
-                <label for="message">Pesan:</label>
-                <textarea id="message" name="message" required></textarea>
-            </div>
-            <button type="submit">Kirim Pesan</button>
-        </form>
+        </section>
 
-        <div class="social-links">
-            <a href="https://www.linkedin.com/in/yosedie" target="_blank" title="LinkedIn">LinkedIn</a> <a href="https://github.com/yosedie" target="_blank" title="GitHub">GitHub</a>
+        <section id="connect" class="content-section py-16">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl font-bold mb-8 accent-color">📫 Contact Me & Let's Collaborate!</h2> <p class="text-lg mb-10 max-w-xl mx-auto">I'm always open to discussing new projects, creative ideas, or opportunities to collaborate. Feel free to reach out!</p> <div class="flex justify-center space-x-6">
+                    <a href="https://www.linkedin.com/in/yosedie" target="_blank" rel="noreferrer" class="transform hover:scale-110 transition-transform">
+                        <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"/>
+                    </a>
+                    <a href="mailto:ryan.y22@mhs.istts.ac.id" class="transform hover:scale-110 transition-transform"> <img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"/>
+                    </a>
+                </div>
             </div>
-    </section>
+        </section>
+        
+        <footer class="text-center py-8 text-gray-600 border-t border-gray-200 mt-12">
+            <p>&copy; <span id="currentYear"></span> Yosedie. All rights reserved.</p> <p class="text-sm">Thank you for visiting my profile!</p> </footer>
 
-    <footer>
-        <p>&copy; <span id="currentYear"></span> Yosedie. Dibuat dengan semangat dan secangkir kopi.</p>
-        <p>Terinspirasi untuk terus belajar dan berinovasi.</p>
-    </footer>
+    </main>
 
     <script>
-        // JavaScript sederhana untuk menampilkan tahun saat ini di footer
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const sidebar = document.getElementById('sidebar');
+            mobileMenuButton.addEventListener('click', function () {
+                sidebar.classList.toggle('-translate-x-full');
+            });
 
-        // (Opsional) Tambahkan JavaScript lain di sini jika diperlukan
-        // Misalnya, untuk validasi form, animasi, atau galeri gambar
+            const navLinks = document.querySelectorAll('.sidebar-link');
+            const sections = document.querySelectorAll('.content-section');
+
+            function changeActiveLink() {
+                let index = sections.length;
+                while(--index && window.scrollY + 100 < sections[index].offsetTop) {}
+                
+                navLinks.forEach((link) => link.classList.remove('active'));
+                if (navLinks[index]) {
+                     navLinks[index].classList.add('active');
+                }
+            }
+
+            changeActiveLink();
+            window.addEventListener('scroll', changeActiveLink);
+
+            navLinks.forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 60, // Adjusted for fixed header height
+                            behavior: 'smooth'
+                        });
+                    }
+                    if (window.innerWidth < 768) { // Tailwind's md breakpoint
+                        sidebar.classList.add('-translate-x-full');
+                    }
+                });
+            });
+
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // Chart.js: Skills Data
+            const skillsData = {
+                labels: ['Programming Lang.', 'Frameworks/Libraries', 'Databases', 'DevOps Tools', 'Cloud'], // Translated
+                datasets: [{
+                    label: 'Number of Skills per Category', // Translated
+                    data: [4, 2, 2, 3, 1], // This data should match your actual skills listed
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.7)', 
+                        'rgba(16, 185, 129, 0.7)', 
+                        'rgba(239, 68, 68, 0.7)',  
+                        'rgba(245, 158, 11, 0.7)', 
+                        'rgba(139, 92, 246, 0.7)'  
+                    ],
+                    borderColor: [
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(16, 185, 129, 1)',
+                        'rgba(239, 68, 68, 1)',
+                        'rgba(245, 158, 11, 1)',
+                        'rgba(139, 92, 246, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            };
+
+            const skillsChartCtx = document.getElementById('skillsChart');
+            if (skillsChartCtx) {
+                new Chart(skillsChartCtx.getContext('2d'), {
+                    type: 'bar', 
+                    data: skillsData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y', 
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0 
+                                },
+                                grid: {
+                                    display: true,
+                                    color: 'rgba(200, 200, 200, 0.2)'
+                                }
+                            },
+                            y: {
+                                 grid: {
+                                    display: false
+                                 }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false 
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0,0,0,0.8)',
+                                titleFont: { size: 14 },
+                                bodyFont: { size: 12 },
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.x !== null) {
+                                            label += context.parsed.x;
+                                        }
+                                        return label;
+                                    }
+                                }
+                            },
+                            title: { // Chart Title
+                                display: true,
+                                text: 'Main Skill Categories', // Translated
+                                font: {
+                                    size: 16,
+                                    weight: '600'
+                                },
+                                color: '#4A4A4A',
+                                padding: {
+                                    top: 10,
+                                    bottom: 25
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>
