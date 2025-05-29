@@ -1,7 +1,396 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yosedie - Software Developer</title>
+    <style>
+        /* CSS Dasar - Anda bisa memindahkannya ke file style.css terpisah */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            scroll-behavior: smooth; /* Untuk scrolling yang halus saat klik navigasi */
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigasi */
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #0779e4 3px solid;
+            position: sticky; /* Membuat navigasi tetap di atas saat scroll */
+            top: 0;
+            z-index: 1000;
+        }
+
+        header a {
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 16px;
+        }
+
+        header ul {
+            padding: 0;
+            list-style: none;
+            text-align: center;
+        }
+
+        header li {
+            display: inline;
+            padding: 0 20px 0 20px;
+        }
+
+        header #branding {
+            float: left;
+            margin-top: -10px; /* Sesuaikan agar sejajar dengan nav */
+        }
+
+        header #branding h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        header nav {
+            float: right;
+            margin-top: 0px; /* Sesuaikan agar sejajar */
+        }
+
+        /* Hero Section (Beranda) */
+        #hero {
+            min-height: 400px;
+            background: url('https://via.placeholder.com/1500x600?text=Placeholder+Background+Image') no-repeat 0 -200px; /* Ganti dengan gambar background Anda */
+            background-size: cover;
+            text-align: center;
+            color: #fff; /* Ubah warna teks jika background Anda gelap */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        #hero h1 {
+            font-size: 55px;
+            margin-bottom: 10px;
+            color: #333; /* Ganti jika background Anda berbeda */
+        }
+
+        #hero p {
+            font-size: 20px;
+            color: #555; /* Ganti jika background Anda berbeda */
+        }
+
+        .hero-cta {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: #0779e4;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        .hero-cta:hover {
+            background: #045aa0;
+        }
+
+        /* Section Styling Umum */
+        section {
+            padding: 40px 0;
+            border-bottom: 1px #ddd solid;
+        }
+        section:last-child {
+            border-bottom: none;
+        }
+        section h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        /* About Section */
+        #about img.profile-pic {
+            display: block;
+            width: 150px; /* Sesuaikan ukuran */
+            height: 150px;
+            border-radius: 50%; /* Membuat gambar bulat */
+            margin: 0 auto 20px auto;
+            object-fit: cover; /* Memastikan gambar tidak terdistorsi */
+        }
+        #about p {
+            text-align: justify; /* Atau 'left' atau 'center' sesuai preferensi */
+            font-size: 18px; /* Tambahkan ukuran font jika diperlukan */
+            max-width: 800px; /* Batasi lebar teks untuk keterbacaan */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        /* Skills Section */
+        #skills ul {
+            list-style: none;
+            padding: 0;
+            display: flex; /* Menggunakan flexbox untuk tata letak */
+            flex-wrap: wrap; /* Membungkus item jika tidak cukup ruang */
+            justify-content: center; /* Menengahkan item */
+        }
+
+        #skills li {
+            background: #0779e4;
+            color: #fff;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* Portfolio Section */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Grid responsif */
+            gap: 20px;
+        }
+
+        .project-card {
+            background: #fff;
+            padding: 20px;
+            border: 1px #ccc solid;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .project-card img {
+            width: 100%;
+            max-height: 200px; /* Batasi tinggi gambar */
+            object-fit: cover; /* Pastikan gambar tidak terdistorsi */
+            border-bottom: 1px #eee solid;
+            margin-bottom: 15px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .project-card h3 {
+            margin-top: 0;
+            color: #0779e4;
+        }
+
+        .project-card a.project-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 3px;
+        }
+        .project-card a.project-link:hover {
+            background: #555;
+        }
+
+        /* Contact Section */
+        #contact form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+        }
+        #contact label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        #contact input[type="text"],
+        #contact input[type="email"],
+        #contact textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px #ccc solid;
+            box-sizing: border-box; /* Agar padding tidak menambah lebar */
+        }
+        #contact textarea {
+            height: 100px;
+        }
+        #contact button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: #0779e4;
+            color: #fff;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #contact button[type="submit"]:hover {
+            background: #045aa0;
+        }
+        .social-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .social-links a {
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 24px; /* Ukuran ikon sosial media */
+            color: #333;
+        }
+        .social-links a:hover {
+            color: #0779e4;
+        }
+
+
+        /* Footer */
+        footer {
+            padding: 20px;
+            margin-top: 20px;
+            color: #fff;
+            background-color: #333;
+            text-align: center;
+        }
+    </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1><a href="#hero">Yosedie</a></h1> </div>
+            <nav>
+                <ul>
+                    <li><a href="#hero">Beranda</a></li>
+                    <li><a href="#about">Tentang Saya</a></li>
+                    <li><a href="#skills">Keahlian</a></li>
+                    <li><a href="#portfolio">Portofolio</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero">
+        <h1>Hai, Saya Yosedie!</h1>
+        <p>Seorang Software Developer yang antusias dalam [Sebutkan 1-2 Hal Utama, misal: membangun aplikasi web inovatif dan solusi berbasis cloud].</p>
+        <p>Selamat datang di portofolio online saya. Mari lihat lebih dekat apa yang telah saya kerjakan.</p>
+        <a href="#portfolio" class="hero-cta">Lihat Proyek Saya</a>
+    </section>
+
+    <section id="about" class="container">
+        <h2>Tentang Saya</h2>
+        <img src="https://via.placeholder.com/150?text=Foto+Yosedie" alt="Foto Yosedie" class="profile-pic"> <p>
+            Saya adalah seorang pengembang perangkat lunak yang bersemangat dengan pengalaman dalam [Sebutkan Teknologi Utama, misal: Python, JavaScript, dan Java]. Saya memiliki ketertarikan mendalam pada [Sebutkan Bidang Minat, misal: pengembangan full-stack, arsitektur microservices, dan machine learning].
+        </p>
+        <p>
+            Perjalanan saya di dunia teknologi dimulai dari [Ceritakan sedikit awal mula ketertarikan Anda]. Sejak saat itu, saya terus belajar dan beradaptasi dengan perkembangan teknologi, selalu berusaha untuk menciptakan solusi yang tidak hanya fungsional tetapi juga efisien dan memberikan dampak positif. Saya percaya bahwa kolaborasi dan pembelajaran berkelanjutan adalah kunci untuk berkembang di industri ini.
+        </p>
+        <p>
+            Di luar coding, saya menikmati [Sebutkan hobi atau minat Anda, misal: membaca buku tentang teknologi terkini, berkontribusi pada proyek open-source, atau bermain musik].
+        </p>
+    </section>
+
+    <section id="skills" class="container">
+        <h2>Keahlian & Teknologi</h2>
+        <ul>
+            <li>Python</li>
+            <li>JavaScript (ES6+)</li>
+            <li>Java</li>
+            <li>C++</li>
+            <li>React</li>
+            <li>Node.js</li>
+            <li>Express.js</li>
+            <li>Spring Boot (jika relevan)</li>
+            <li>MySQL</li>
+            <li>MongoDB</li>
+            <li>Git & GitHub</li>
+            <li>Docker</li>
+            <li>Jenkins</li>
+            <li>Google Cloud Platform (GCP)</li>
+            <li>HTML5 & CSS3</li>
+            <li>RESTful APIs</li>
+            <li>Agile Methodologies</li>
+            </ul>
+    </section>
+
+    <section id="portfolio" class="container">
+        <h2>Portofolio Proyek</h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <img src="https://via.placeholder.com/400x200?text=Screenshot+Proyek+Framework" alt="Web Programming Framework"> <h3>Web Programming Framework E-Commerce</h3>
+                <p>
+                    Sebuah framework berbasis [Node.js/React atau teknologi utama lainnya] yang dirancang untuk mempercepat pengembangan aplikasi e-commerce kustom untuk pasar nasional.
+                </p>
+                <p><strong>Teknologi:</strong> Node.js, React, MongoDB, Docker</p>
+                <a href="https://github.com/yosedie/framework-project" target="_blank" class="project-link">Lihat di GitHub</a>
+                </div>
+
+            <div class="project-card">
+                <img src="https://via.placeholder.com/400x200?text=Screenshot+Proyek+Lain" alt="Nama Proyek Lain"> <h3>[Nama Proyek Anda Lainnya]</h3>
+                <p>
+                    [Deskripsi singkat proyek ini, tujuannya, dan apa yang membuatnya menarik. Jelaskan kontribusi Anda jika ini proyek tim.]
+                </p>
+                <p><strong>Teknologi:</strong> [Sebutkan teknologi utama proyek ini, misal: Python, Django, PostgreSQL]</p>
+                <a href="[LINK_GITHUB_PROYEK_LAIN]" target="_blank" class="project-link">Lihat di GitHub</a>
+                </div>
+
+            <div class="project-card">
+                 <img src="https://via.placeholder.com/400x200?text=Screenshot+Proyek+Ketiga" alt="Nama Proyek Ketiga"> <h3>[Nama Proyek Ketiga Anda]</h3>
+                <p>
+                    [Deskripsi singkat proyek ketiga. Fokus pada masalah yang dipecahkan atau fitur unggulan.]
+                </p>
+                <p><strong>Teknologi:</strong> [Sebutkan teknologi utama proyek ini, misal: Java, Android Studio, Firebase]</p>
+                <a href="[LINK_GITHUB_PROYEK_KETIGA]" target="_blank" class="project-link">Lihat di GitHub</a>
+                 </div>
+        </div>
+    </section>
+
+    <section id="contact" class="container">
+        <h2>Hubungi Saya</h2>
+        <p style="text-align:center;">Saya selalu terbuka untuk diskusi, peluang kolaborasi, atau sekadar bertukar pikiran. Jangan ragu untuk menghubungi saya!</p>
+        
+        <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST"> <div>
+                <label for="name">Nama:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="message">Pesan:</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit">Kirim Pesan</button>
+        </form>
+
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/yosedie" target="_blank" title="LinkedIn">LinkedIn</a> <a href="https://github.com/yosedie" target="_blank" title="GitHub">GitHub</a>
+            </div>
+    </section>
+
+    <footer>
+        <p>&copy; <span id="currentYear"></span> Yosedie. Dibuat dengan semangat dan secangkir kopi.</p>
+        <p>Terinspirasi untuk terus belajar dan berinovasi.</p>
+    </footer>
+
+    <script>
+        // JavaScript sederhana untuk menampilkan tahun saat ini di footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // (Opsional) Tambahkan JavaScript lain di sini jika diperlukan
+        // Misalnya, untuk validasi form, animasi, atau galeri gambar
+    </script>
 </body>
 </html>
