@@ -4,9 +4,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yosedie | Software Developer Portfolio</title>
+    <title>Yosedie | AI Engineer Portfolio</title>
     <meta name="description"
-        content="Portfolio of Yosedie, a passionate Software Developer specializing in React, Node.js, and Cloud Technologies.">
+        content="Portfolio of Yosedie, a passionate AI Engineer specializing in React, Node.js, and Cloud Technologies.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://github.com/yosedie.png">
+    <link rel="apple-touch-icon" href="https://github.com/yosedie.png">
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yosedie.github.io/">
+    <meta property="og:title" content="Yosedie | AI Engineer Portfolio">
+    <meta property="og:description"
+        content="AI Engineer specializing in Machine Learning, Cloud Technologies, and Full-Stack Development. 50+ certifications from Google, NVIDIA, and Cisco.">
+    <meta property="og:image" content="https://github.com/yosedie.png">
+    <meta property="og:image:alt" content="Yosedie - AI Engineer">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://yosedie.github.io/">
+    <meta name="twitter:title" content="Yosedie | AI Engineer Portfolio">
+    <meta name="twitter:description"
+        content="AI Engineer specializing in Machine Learning, Cloud Technologies, and Full-Stack Development.">
+    <meta name="twitter:image" content="https://github.com/yosedie.png">
+
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="msapplication-TileColor" content="#4f46e5">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yosedie.github.io/">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,20 +56,242 @@
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <!-- DevIcons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "mainEntity": {
+            "@type": "Person",
+            "name": "Yosedie",
+            "jobTitle": "AI Engineer",
+            "description": "AI Engineer specializing in Machine Learning, Cloud Technologies, and Full-Stack Development",
+            "url": "https://yosedie.github.io",
+            "image": "https://github.com/yosedie.png",
+            "email": "ryosedie@gmail.com",
+            "sameAs": [
+                "https://github.com/yosedie",
+                "https://www.linkedin.com/in/yosedie/"
+            ],
+            "alumniOf": [
+                {
+                    "@type": "EducationalOrganization",
+                    "name": "ISTTS"
+                }
+            ],
+            "knowsAbout": [
+                "Artificial Intelligence",
+                "Machine Learning",
+                "Cloud Computing",
+                "Full-Stack Development",
+                "React",
+                "Node.js",
+                "Python",
+                "Google Cloud Platform"
+            ]
+        },
+        "hasPart": [
+            {
+                "@type": "CreativeWork",
+                "name": "NewNational E-Commerce System",
+                "description": "Enterprise-grade home appliance e-commerce platform with Fastify and TypeScript"
+            },
+            {
+                "@type": "CreativeWork",
+                "name": "GiziSehat - Smart Nutrition Assistant",
+                "description": "AI-based mobile health assistant with Gemini AI for calorie analysis"
+            },
+            {
+                "@type": "CreativeWork",
+                "name": "Intelligent Carpet Analysis System",
+                "description": "Computer Vision system for automated carpet quality analysis"
+            }
+        ]
+    }
+    </script>
 </head>
 
 <body class="antialiased text-gray-800 bg-gray-50">
 
-    <!-- Particle Canvas -->
-    <canvas id="particle-canvas"></canvas>
+    <!-- Skip to main content for accessibility -->
+    <a href="#hero" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-indigo-600 focus:text-white focus:rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400">
+        Skip to main content
+    </a>
+
+    <!-- Light 3D Background -->
+    <div id="bg-3d" class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+        <div class="floating-shape shape-5"></div>
+    </div>
     <!-- Cursor Glow -->
     <div class="cursor-glow" id="cursor-glow"></div>
+
+    <!-- Effects Config Button -->
+    <button id="rain-config-btn"
+        class="fixed bottom-4 right-4 z-50 p-3 bg-white/80 backdrop-blur-md rounded-full shadow-lg hover:bg-white transition-colors group"
+        aria-label="Effects Settings"
+        title="Toggle visual effects settings">
+        <i class="ph ph-sliders text-xl text-indigo-600 group-hover:scale-110 transition-transform"></i>
+    </button>
+
+    <!-- Effects Config Panel -->
+    <div id="rain-config-panel"
+        class="fixed bottom-20 right-4 z-50 w-80 bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-gray-200/50 p-5 transform translate-x-[120%] transition-transform duration-300 ease-out max-h-[80vh] overflow-y-auto">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="font-bold text-gray-800 flex items-center gap-2">
+                <i class="ph ph-sparkle text-indigo-600"></i>
+                Effects Settings
+            </h3>
+            <button id="rain-config-close" class="text-gray-400 hover:text-gray-600 transition-colors">
+                <i class="ph ph-x text-lg"></i>
+            </button>
+        </div>
+        
+        <!-- Motion Effects Section -->
+        <div class="mb-4 pb-4 border-b border-gray-100">
+            <p class="text-xs text-gray-500 uppercase tracking-wide mb-3 font-semibold">Motion Effects</p>
+            
+            <!-- 3D Card Tilt Toggle -->
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="ph ph-cube text-indigo-500"></i> 3D Card Tilt
+                </span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="tilt-toggle" class="sr-only peer" checked>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+                </label>
+            </div>
+            
+            <!-- Floating Animations Toggle -->
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="ph ph-wind text-pink-500"></i> Floating Animations
+                </span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="float-toggle" class="sr-only peer" checked>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+                </label>
+            </div>
+            
+            <!-- Cursor Glow Toggle -->
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="ph ph-cursor text-amber-500"></i> Cursor Glow
+                </span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="glow-toggle" class="sr-only peer" checked>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+                </label>
+            </div>
+            
+            <!-- Ambient Particles Toggle -->
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="ph ph-circles-three text-purple-500"></i> Ambient Particles
+                </span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="particles-toggle" class="sr-only peer" checked>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+                </label>
+            </div>
+        </div>
+        
+        <!-- Rain Effect Section -->
+        <div class="mb-4 pb-4 border-b border-gray-100">
+            <p class="text-xs text-gray-500 uppercase tracking-wide mb-3 font-semibold">Rain Effect</p>
+            
+            <!-- Enable/Disable Toggle -->
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="ph ph-cloud-rain text-blue-500"></i> Enable Rain
+                </span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="rain-toggle" class="sr-only peer" checked>
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+                </label>
+            </div>
+        
+        <!-- Drop Count -->
+        <div class="mb-4">
+            <div class="flex justify-between mb-1">
+                <label class="text-sm font-medium text-gray-700">Drops</label>
+                <span id="drop-count-value" class="text-sm text-indigo-600 font-semibold">50</span>
+            </div>
+            <input type="range" id="drop-count" min="50" max="600" value="50" 
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+        </div>
+        
+        <!-- Drop Speed -->
+        <div class="mb-4">
+            <div class="flex justify-between mb-1">
+                <label class="text-sm font-medium text-gray-700">Speed</label>
+                <span id="drop-speed-value" class="text-sm text-indigo-600 font-semibold">5</span>
+            </div>
+            <input type="range" id="drop-speed" min="5" max="30" value="5" 
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+        </div>
+        
+        <!-- Wind -->
+        <div class="mb-4">
+            <div class="flex justify-between mb-1">
+                <label class="text-sm font-medium text-gray-700">Wind</label>
+                <span id="wind-value" class="text-sm text-indigo-600 font-semibold">0</span>
+            </div>
+            <input type="range" id="wind" min="-10" max="10" value="0" 
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+        </div>
+        
+        <!-- Cursor Repel -->
+        <div class="mb-4">
+            <div class="flex justify-between mb-1">
+                <label class="text-sm font-medium text-gray-700">Cursor Repel</label>
+                <span id="cursor-repel-value" class="text-sm text-indigo-600 font-semibold">0</span>
+            </div>
+            <input type="range" id="cursor-repel" min="0" max="20" value="0" 
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+        </div>
+        
+        <!-- Water Rise Speed -->
+        <div class="mb-4">
+            <div class="flex justify-between mb-1">
+                <label class="text-sm font-medium text-gray-700">Water Rise</label>
+                <span id="water-rise-value" class="text-sm text-indigo-600 font-semibold">0</span>
+            </div>
+            <input type="range" id="water-rise" min="0" max="1" step="0.05" value="0" 
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+        </div>
+        
+        <!-- Reset Water Button -->
+        <button id="reset-water-btn" 
+            class="w-full mt-2 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-lg font-medium text-sm hover:bg-indigo-100 transition-colors flex items-center justify-center gap-2">
+            <i class="ph ph-arrow-counter-clockwise"></i>
+            Reset Water Level
+        </button>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="flex gap-2">
+            <button id="disable-all-effects" 
+                class="flex-1 px-3 py-2 bg-gray-100 text-gray-700 rounded-lg font-medium text-xs hover:bg-gray-200 transition-colors flex items-center justify-center gap-1">
+                <i class="ph ph-power"></i> All Off
+            </button>
+            <button id="enable-all-effects" 
+                class="flex-1 px-3 py-2 bg-indigo-100 text-indigo-700 rounded-lg font-medium text-xs hover:bg-indigo-200 transition-colors flex items-center justify-center gap-1">
+                <i class="ph ph-sparkle"></i> All On
+            </button>
+        </div>
+    </div>
 
     <!-- Mobile Menu Button -->
     <button id="mobile-menu-btn"
         class="fixed top-4 right-4 z-50 p-2 bg-white/80 backdrop-blur-md rounded-full shadow-lg md:hidden hover:bg-white transition-colors"
-        aria-label="Toggle Menu">
-        <i class="ph ph-list text-2xl text-indigo-600"></i>
+        aria-label="Toggle Menu"
+        aria-expanded="false">
+        <i class="ph ph-list text-2xl text-indigo-600" id="mobile-menu-icon"></i>
     </button>
 
     <!-- Sidebar Navigation -->
@@ -164,9 +414,33 @@
                     </a>
                 </div>
 
-                <div id="projects-container" class="grid md:grid-cols-2 gap-8">
+                <div id="projects-container" class="grid md:grid-cols-2 gap-8" aria-live="polite">
                     <!-- Dynamic Project Content -->
-                    <p class="text-center w-full col-span-2 text-gray-500">Loading projects...</p>
+                    <!-- Skeleton Loading -->
+                    <div class="project-card animate-pulse">
+                        <div class="h-48 bg-gray-200 rounded-t-xl"></div>
+                        <div class="p-6 space-y-4">
+                            <div class="h-6 bg-gray-200 rounded w-3/4"></div>
+                            <div class="h-4 bg-gray-200 rounded w-full"></div>
+                            <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+                            <div class="flex gap-2">
+                                <div class="h-6 bg-gray-200 rounded w-16"></div>
+                                <div class="h-6 bg-gray-200 rounded w-16"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card animate-pulse">
+                        <div class="h-48 bg-gray-200 rounded-t-xl"></div>
+                        <div class="p-6 space-y-4">
+                            <div class="h-6 bg-gray-200 rounded w-3/4"></div>
+                            <div class="h-4 bg-gray-200 rounded w-full"></div>
+                            <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+                            <div class="flex gap-2">
+                                <div class="h-6 bg-gray-200 rounded w-16"></div>
+                                <div class="h-6 bg-gray-200 rounded w-16"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -177,8 +451,38 @@
                 <div class="text-center mb-12 animate-on-scroll">
                     <h2 class="text-4xl font-bold mb-4">Licenses & <span class="text-indigo-600">Certifications</span>
                     </h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">Continuous professional development and validated
+                    <p class="text-gray-600 max-w-2xl mx-auto">Continuous professional development
+                        and validated
                         expertise.</p>
+                </div>
+
+                <!-- Certification Category Tabs -->
+                <div class="flex flex-wrap justify-center gap-3 mb-8 animate-on-scroll">
+                    <button
+                        class="cert-tab active px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-indigo-600 text-white shadow-lg hover:shadow-xl"
+                        data-category="all">
+                        All
+                    </button>
+                    <button
+                        class="cert-tab px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-white text-gray-700 shadow hover:shadow-md border border-gray-200"
+                        data-category="ai-ml">
+                        <i class="ph-fill ph-brain mr-1"></i> AI/ML
+                    </button>
+                    <button
+                        class="cert-tab px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-white text-gray-700 shadow hover:shadow-md border border-gray-200"
+                        data-category="cloud">
+                        <i class="ph-fill ph-cloud mr-1"></i> Cloud
+                    </button>
+                    <button
+                        class="cert-tab px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-white text-gray-700 shadow hover:shadow-md border border-gray-200"
+                        data-category="security">
+                        <i class="ph-fill ph-shield mr-1"></i> Security
+                    </button>
+                    <button
+                        class="cert-tab px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-white text-gray-700 shadow hover:shadow-md border border-gray-200"
+                        data-category="programming">
+                        <i class="ph-fill ph-code mr-1"></i> Programming
+                    </button>
                 </div>
 
                 <div id="certifications-container" class="cert-grid animate-on-scroll">
@@ -197,8 +501,24 @@
                 </div>
 
                 <!-- Timeline Container -->
-                <div id="experience-container" class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 mb-12">
-                    <p class="text-center text-gray-500">Loading experience...</p>
+                <div id="experience-container" class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 mb-12" aria-live="polite">
+                    <!-- Skeleton Loading -->
+                    <div class="animate-pulse space-y-6">
+                        <div class="relative pl-8 pb-6 border-l border-gray-200">
+                            <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-200"></div>
+                            <div class="h-4 bg-gray-200 rounded w-24 mb-2"></div>
+                            <div class="h-6 bg-gray-200 rounded w-48 mb-2"></div>
+                            <div class="h-4 bg-gray-200 rounded w-32 mb-2"></div>
+                            <div class="h-3 bg-gray-200 rounded w-full"></div>
+                        </div>
+                        <div class="relative pl-8 border-l-0">
+                            <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-gray-200"></div>
+                            <div class="h-4 bg-gray-200 rounded w-24 mb-2"></div>
+                            <div class="h-6 bg-gray-200 rounded w-48 mb-2"></div>
+                            <div class="h-4 bg-gray-200 rounded w-32 mb-2"></div>
+                            <div class="h-3 bg-gray-200 rounded w-full"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="linkedin-cta"
@@ -230,8 +550,18 @@
                 </div>
 
                 <!-- Education Container -->
-                <div id="education-container" class="space-y-4 mb-12">
-                    <p class="text-center text-gray-500">Loading education...</p>
+                <div id="education-container" class="space-y-4 mb-12" aria-live="polite">
+                    <!-- Skeleton Loading -->
+                    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm animate-pulse">
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex-1">
+                                <div class="h-6 bg-gray-200 rounded w-3/4 mb-2"></div>
+                                <div class="h-5 bg-gray-200 rounded w-1/2"></div>
+                            </div>
+                            <div class="h-6 bg-gray-200 rounded w-24"></div>
+                        </div>
+                        <div class="h-4 bg-gray-200 rounded w-2/3 mt-3"></div>
+                    </div>
                 </div>
 
                 <div id="learning-container" class="grid gap-6 animate-on-scroll">
@@ -255,6 +585,8 @@
     <script src="js/data.js"></script>
     <!-- Link to the main script -->
     <script src="js/script.js"></script>
+    <!-- Rain Effect -->
+    <script src="js/rain.js"></script>
 </body>
 
 </html>
