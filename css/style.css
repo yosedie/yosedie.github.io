@@ -1849,7 +1849,7 @@ main.main-content > section.active-section > *:last-child {
 }
 /* Frosted glass so the rain + blobs stay visible on every page */
 main.main-content > section.active-section:not(#hero) {
-    background-color: rgba(255, 255, 255, 0.78) !important;
+    background-color: rgba(255, 255, 255, 0.6) !important;
     background-image: none !important;
 }
 main.main-content > section#hero.active-section {
