@@ -8,24 +8,38 @@ document.addEventListener('DOMContentLoaded', () => {
     'use strict';
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    /* ---------- 1. TEXT DECODE — section headings decrypt on activation ---------- */
+    /* ---------- 1. TEXT DECODE — section headings decrypt on activation ----------
+       Scrambles per TEXT NODE only: element structure (gradient spans, <br>)
+       is never destroyed, so it can never leave a heading half-empty. */
     const CHARS = '!<>-_\\/[]{}=+*^?#01ABCDEF';
+    const rndChar = () => CHARS[(Math.random() * CHARS.length) | 0];
     function scrambleText(el, duration) {
         if (el.dataset.fxDecoded) return;
         el.dataset.fxDecoded = '1';
-        const original = el.innerHTML;      // restored at the end (keeps gradient spans)
-        const plain = el.textContent;
+        const nodes = [];
+        (function collect(node) {
+            node.childNodes.forEach(child => {
+                if (child.nodeType === 3 && child.nodeValue.trim()) nodes.push({ node: child, original: child.nodeValue });
+                else if (child.nodeType === 1) collect(child);
+            });
+        })(el);
+        const total = nodes.reduce((a, n) => a + n.original.length, 0);
         const start = performance.now();
         (function frame(now) {
             const t = Math.min(1, (now - start) / duration);
-            const reveal = Math.floor(plain.length * t);
-            let out = '';
-            for (let i = 0; i < plain.length; i++) {
-                out += i < reveal ? plain[i] : CHARS[(Math.random() * CHARS.length) | 0];
+            let reveal = Math.floor(total * t);
+            for (const n of nodes) {
+                if (t >= 1) { n.node.nodeValue = n.original; continue; }
+                if (reveal <= 0) {
+                    n.node.nodeValue = [...n.original].map(rndChar).join('');
+                } else if (reveal >= n.original.length) {
+                    n.node.nodeValue = n.original;
+                } else {
+                    n.node.nodeValue = n.original.slice(0, reveal) + [...n.original.slice(reveal)].map(rndChar).join('');
+                }
+                reveal -= n.original.length;
             }
-            el.textContent = out;
             if (t < 1) requestAnimationFrame(frame);
-            else el.innerHTML = original;
         })(start);
     }
 
@@ -256,23 +270,83 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1000);
     }
 
-    /* ---------- 8. RETRO SOUNDS — muted by default ---------- */
+    /* ---------- 8. AUDIO — generative BGM (25%) + UI sounds (50%) ---------- */
     let audioCtx = null;
-    let soundOn = localStorage.getItem('yosedie-fx-sound') === 'on';
+    let bgmVol = parseInt(localStorage.getItem('yosedie-bgm-vol') || '25', 10);
+    let sfxVol = parseInt(localStorage.getItem('yosedie-sfx-vol') || '50', 10);
+    if (isNaN(bgmVol)) bgmVol = 25;
+    if (isNaN(sfxVol)) sfxVol = 50;
+    const audio = { master: null, bgm: null, started: false, chordIndex: 0, bgmTimer: null };
+
+    function ensureAudio() {
+        if (audio.started) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            return true;
+        }
+        try {
+            audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            audio.master = audioCtx.createGain();
+            audio.master.gain.value = 1;
+            audio.master.connect(audioCtx.destination);
+            audio.started = true;
+            if (bgmVol > 0) startBgm();
+            return true;
+        } catch (e) { return false; }
+    }
+
+    // Generative ambient BGM — soft detuned pad chords, no audio files.
+    const CHORDS = [
+        [220.00, 261.63, 329.63, 392.00],  // Am7
+        [174.61, 220.00, 261.63, 329.63],  // Fmaj7
+        [130.81, 164.81, 196.00, 246.94],  // Cmaj7
+        [196.00, 246.94, 293.66, 349.23]   // G
+    ];
+    function startBgm() {
+        if (!ensureAudio()) return;
+        audio.bgm = audioCtx.createGain();
+        audio.bgm.gain.value = (bgmVol / 100) * 0.5;
+        const lp = audioCtx.createBiquadFilter();
+        lp.type = 'lowpass';
+        lp.frequency.value = 850;
+        audio.bgm.connect(lp); lp.connect(audio.master);
+        playChord();
+        audio.bgmTimer = setInterval(playChord, 4800);
+    }
+    function playChord() {
+        if (bgmVol === 0 || audioCtx.state === 'suspended') return;
+        const chord = CHORDS[audio.chordIndex % CHORDS.length];
+        audio.chordIndex++;
+        const t = audioCtx.currentTime;
+        chord.forEach((f, i) => {
+            const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+            o.type = i === 0 ? 'sine' : 'triangle';
+            o.frequency.value = f;
+            o.detune.value = (i - 1.5) * 5;
+            g.gain.setValueAtTime(0, t);
+            g.gain.linearRampToValueAtTime(0.055, t + 1.8);   // slow swell
+            g.gain.setValueAtTime(0.055, t + 3.6);
+            g.gain.linearRampToValueAtTime(0, t + 5.4);       // overlaps next chord
+            o.connect(g); g.connect(audio.bgm);
+            o.start(t); o.stop(t + 5.5);
+        });
+    }
+
     let lastBlip = 0;
     function blip(freq, dur, type) {
-        if (!soundOn) return;
+        if (sfxVol === 0) return;
         const now = performance.now();
         if (now - lastBlip < 60) return;
         lastBlip = now;
+        if (!ensureAudio()) return;
         try {
-            audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
             const o = audioCtx.createOscillator(), g = audioCtx.createGain();
             o.type = type || 'sine';
             o.frequency.value = freq;
-            g.gain.setValueAtTime(0.025, audioCtx.currentTime);
+            const peak = (sfxVol / 100) * 0.06;
+            g.gain.setValueAtTime(peak, audioCtx.currentTime);
             g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
-            o.connect(g); g.connect(audioCtx.destination);
+            o.connect(g); g.connect(audio.master);
             o.start(); o.stop(audioCtx.currentTime + dur);
         } catch (e) { /* audio unavailable */ }
     }
@@ -282,8 +356,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
         if (e.target.closest && e.target.closest('a, button')) blip(620, 0.09, 'triangle');
     });
+    // browsers allow audio only after a gesture — first interaction wakes it
+    const wake = () => { ensureAudio(); document.removeEventListener('pointerdown', wake); document.removeEventListener('keydown', wake); };
+    document.addEventListener('pointerdown', wake);
+    document.addEventListener('keydown', wake);
 
-    /* ---------- 9. PANEL WIRING — Matrix mode & UI sounds ---------- */
+    /* ---------- 9. PANEL WIRING — Matrix mode & volume sliders ---------- */
     function wirePanel() {
         const matrixToggle = document.getElementById('matrix-toggle');
         if (matrixToggle) {
@@ -293,13 +371,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
-        const soundToggle = document.getElementById('sound-toggle');
-        if (soundToggle) {
-            soundToggle.checked = soundOn;
-            soundToggle.addEventListener('change', () => {
-                soundOn = soundToggle.checked;
-                localStorage.setItem('yosedie-fx-sound', soundOn ? 'on' : 'off');
-                if (soundOn) blip(880, 0.12);
+        const bgmSlider = document.getElementById('bgm-vol');
+        const bgmValue = document.getElementById('bgm-vol-value');
+        if (bgmSlider) {
+            bgmSlider.value = bgmVol;
+            if (bgmValue) bgmValue.textContent = bgmVol + '%';
+            bgmSlider.addEventListener('input', () => {
+                bgmVol = parseInt(bgmSlider.value, 10);
+                localStorage.setItem('yosedie-bgm-vol', String(bgmVol));
+                if (bgmValue) bgmValue.textContent = bgmVol + '%';
+                if (audio.bgm) audio.bgm.gain.value = (bgmVol / 100) * 0.5;
+                if (bgmVol > 0) startBgm();
+            });
+        }
+        const sfxSlider = document.getElementById('sfx-vol');
+        const sfxValue = document.getElementById('sfx-vol-value');
+        if (sfxSlider) {
+            sfxSlider.value = sfxVol;
+            if (sfxValue) sfxValue.textContent = sfxVol + '%';
+            sfxSlider.addEventListener('input', () => {
+                sfxVol = parseInt(sfxSlider.value, 10);
+                localStorage.setItem('yosedie-sfx-vol', String(sfxVol));
+                if (sfxValue) sfxValue.textContent = sfxVol + '%';
+                blip(880, 0.12);
             });
         }
     }
