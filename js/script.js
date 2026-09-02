@@ -250,6 +250,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         </div>
                     </div>
 
+                    <p class="text-sm md:text-base tracking-[0.45em] text-indigo-500 font-semibold mb-3">ヨセディ</p>
                     <h2 class="text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 mb-4">
                         ${p.heroHeading}
                     </h2>

@@ -38,7 +38,8 @@ var portfolioData = {
     "learning": [
         { "title": "Agentic AI & Multi-Agent Systems", "description": "Studying orchestration, RAG, tool use, and MCP-style agent protocols.", "accentColor": "indigo" },
         { "title": "AI Security & LLM Defense", "description": "Studying prompt injection, agent attack surfaces, and defenses for LLM systems.", "accentColor": "pink" },
-        { "title": "GRC & AI Governance", "description": "Mapping the EU AI Act, ISO/IEC 42001, and risk frameworks onto engineering practice.", "accentColor": "amber" }
+        { "title": "GRC & AI Governance", "description": "Mapping the EU AI Act, ISO/IEC 42001, and risk frameworks onto engineering practice.", "accentColor": "amber" },
+        { "title": "Autonomous Cyber Operations", "description": "Exploring AI-driven threat hunting, automated incident response, and self-healing systems.", "accentColor": "indigo" }
     ],
     "skills": {
         "Languages": [
@@ -529,8 +530,8 @@ var portfolioData = {
             "company": "NGOPER",
             "type": "Part-time",
             "location": "Indonesia (Remote)",
-            "period": "Aug 2025 - Present",
-            "description": "Applying engineering skills to contribute to challenging and innovative AI projects."
+            "period": "Aug 2025 - Aug 2026",
+            "description": "Applied engineering skills to contribute to challenging and innovative AI projects."
         }
     ],
     "education": [
