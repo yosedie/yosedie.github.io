@@ -1,0 +1,4 @@
+Contact: mailto:ryosedie@gmail.com
+Expires: 2027-09-02T00:00:00.000Z
+Preferred-Languages: en, id
+Canonical: https://yosedie.github.io/.well-known/security.txt

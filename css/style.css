@@ -1952,3 +1952,10 @@ body {
     text-align: center;
     letter-spacing: 0.06em;
 }
+#ctx-menu .ctx-clock {
+    display: block;
+    padding-bottom: 2px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    color: #a5b4fc;
+    letter-spacing: 0.08em;
+}

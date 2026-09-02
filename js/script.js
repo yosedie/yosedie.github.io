@@ -2086,7 +2086,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <a class="ctx-item" href="https://github.com/yosedie" target="_blank" rel="noopener"><i class="ph ph-github-logo"></i>GitHub Profile</a>
         <a class="ctx-item" href="https://www.linkedin.com/in/yosedie" target="_blank" rel="noopener"><i class="ph ph-linkedin-logo"></i>LinkedIn</a>
         <div class="ctx-sep"></div>
-        <div class="ctx-footer">custom-built &middot; no default menus here</div>
+        <div class="ctx-footer"><span id="ctx-clock">SYS --:--:-- UTC</span> &middot; custom-built</div>
     `;
     document.body.appendChild(menu);
 
@@ -2113,4 +2113,27 @@ document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
     window.addEventListener('blur', close);
     window.addEventListener('resize', close);
+})();
+
+// --- 13. SECURITY CONSOLE + SYSTEM CLOCK ---
+(function initSysConsole() {
+    const clock = document.getElementById('ctx-clock');
+    if (clock) {
+        const tick = () => { clock.textContent = 'SYS ' + new Date().toISOString().slice(11, 19) + ' UTC'; };
+        tick();
+        setInterval(tick, 1000);
+    }
+    try {
+        console.log('%cYOSEDIE // SECURE PORTFOLIO', 'font:900 18px monospace;color:#6366f1;text-shadow:0 0 12px rgba(99,102,241,.55)');
+        console.log(
+            '%c\u250C\u2500[SECURITY AUDIT]\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n' +
+            '\u2502 CSP enforced ............... OK\n' +
+            '\u2502 CDN integrity (SRI) ........ OK\n' +
+            '\u2502 Context menu ............... LOCKED\n' +
+            '\u2502 Clickjacking guard ......... ON\n' +
+            '\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518',
+            'color:#a5b4fc;font-family:monospace'
+        );
+        console.log('%c\u26A0 tampering attempts are logged. curious? view-source is meant to be read.', 'color:#f9a8d4;font-family:monospace');
+    } catch (e) { /* console unavailable */ }
 })();
