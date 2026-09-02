@@ -227,21 +227,41 @@
         <!-- Interface Section -->
         <div class="mb-4 pb-4 border-b border-gray-100">
             <p class="text-xs text-gray-500 uppercase tracking-wide mb-3 font-semibold">Audio</p>
+            <div class="mb-3">
+                <label class="text-sm font-medium text-gray-700 flex items-center gap-2 mb-1">
+                    <i class="ph ph-music-notes text-teal-500"></i> BGM Style
+                </label>
+                <select id="bgm-style"
+                    class="w-full text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg p-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-teal-300">
+                    <option value="ambient">Ambient Pads</option>
+                    <option value="lofi">Lo-fi Chill</option>
+                    <option value="synthwave">Synthwave</option>
+                    <option value="zen">Zen Pluck</option>
+                </select>
+            </div>
             <div class="mb-4">
                 <div class="flex justify-between mb-1">
-                    <label class="text-sm font-medium text-gray-700 flex items-center gap-2">
-                        <i class="ph ph-music-notes text-teal-500"></i> BGM
-                    </label>
+                    <label class="text-sm font-medium text-gray-700">BGM Volume</label>
                     <span id="bgm-vol-value" class="text-sm text-teal-600 font-semibold">25%</span>
                 </div>
                 <input type="range" id="bgm-vol" min="0" max="100" value="25"
                     class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-teal-600">
             </div>
+            <div class="mb-3">
+                <label class="text-sm font-medium text-gray-700 flex items-center gap-2 mb-1">
+                    <i class="ph ph-speaker-high text-teal-500"></i> SFX Style
+                </label>
+                <select id="sfx-style"
+                    class="w-full text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg p-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-teal-300">
+                    <option value="soft">Soft</option>
+                    <option value="retro">Retro 8-bit</option>
+                    <option value="cyber">Cyber UI</option>
+                    <option value="clicky">Mechanical</option>
+                </select>
+            </div>
             <div>
                 <div class="flex justify-between mb-1">
-                    <label class="text-sm font-medium text-gray-700 flex items-center gap-2">
-                        <i class="ph ph-speaker-high text-teal-500"></i> UI Sounds
-                    </label>
+                    <label class="text-sm font-medium text-gray-700">SFX Volume</label>
                     <span id="sfx-vol-value" class="text-sm text-teal-600 font-semibold">50%</span>
                 </div>
                 <input type="range" id="sfx-vol" min="0" max="100" value="50"
@@ -651,7 +671,7 @@
     <script src="js/script.js?v=7"></script>
     <!-- Rain Effect -->
     <script src="js/rain.js?v=6"></script>
-    <script src="js/effects.js?v=3"></script>
+    <script src="js/effects.js?v=4"></script>
 </body>
 
 </html>
