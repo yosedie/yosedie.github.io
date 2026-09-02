@@ -341,12 +341,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 const fallbackBg = 'bg-gradient-to-br from-indigo-50 to-pink-50';
                 githubContainer.innerHTML = `
                     <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-100 overflow-hidden flex justify-center min-h-[180px] ${fallbackBg}">
-                        <img src="https://raw.githubusercontent.com/yosedie/yosedie/main/profile-summary-card-output/github_light/3-stats.svg"
+                        <img src="https://raw.githubusercontent.com/yosedie/yosedie/main/profile-summary-card-output/github/3-stats.svg"
                             alt="GitHub Stats" class="max-w-full"
                             onerror="this.parentElement.innerHTML='<div class=\'flex items-center justify-center h-full text-gray-400\'><i class=\'ph ph-github-logo text-4xl\'></i><span class=\'ml-2\'>Stats loading...</span></div>'">
                     </div>
                     <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-100 overflow-hidden flex justify-center min-h-[180px] ${fallbackBg}">
-                        <img src="https://raw.githubusercontent.com/yosedie/yosedie/main/profile-summary-card-output/github_light/1-repos-per-language.svg"
+                        <img src="https://raw.githubusercontent.com/yosedie/yosedie/main/profile-summary-card-output/github/1-repos-per-language.svg"
                             alt="Top Languages" class="max-w-full"
                             onerror="this.parentElement.innerHTML='<div class=\'flex items-center justify-center h-full text-gray-400\'><i class=\'ph ph-code text-4xl\'></i><span class=\'ml-2\'>Languages loading...</span></div>'">
                     </div>
