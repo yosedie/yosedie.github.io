@@ -1820,17 +1820,37 @@ body.disable-float [style*="staggerFloat"] {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-5px); }
 }
-/* ─── Per-menu section router: only .active-section is visible ─── */
+/* ─── Per-menu section router: one full-viewport page at a time ─── */
 main.main-content > section {
     display: none !important;
 }
 main.main-content > section.active-section {
     display: flex !important;
     flex-direction: column;
-    justify-content: center;
-    min-height: 100vh;
-    min-height: 100svh;
+    height: 100vh;
+    height: 100svh;
+    overflow-y: auto;
+    scrollbar-width: none;
+    padding-top: 4vh;
+    padding-bottom: 4vh;
     animation: section-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+main.main-content > section.active-section::-webkit-scrollbar {
+    display: none;
+}
+main.main-content > section.active-section > * {
+    flex-shrink: 0;
+}
+main.main-content > section.active-section > *:first-child {
+    margin-top: auto;
+}
+main.main-content > section.active-section > *:last-child {
+    margin-bottom: auto;
+}
+/* Frosted glass so the rain + blobs stay visible on every page */
+main.main-content > section.active-section:not(#hero) {
+    background-color: rgba(255, 255, 255, 0.78) !important;
+    background-image: none !important;
 }
 main.main-content > section#hero.active-section {
     flex-direction: row;

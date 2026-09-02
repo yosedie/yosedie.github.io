@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function () {
         overlay.addEventListener('click', toggleMenu);
     }
 
-    // --- Per-menu Section Router: sidebar clicks swap the visible section ---
+    // --- Per-menu Section Router: nav clicks swap the visible section, URL stays clean ---
     const sections = document.querySelectorAll('main > section');
     const navLinks = document.querySelectorAll('.sidebar-nav-link');
 
@@ -84,41 +84,39 @@ document.addEventListener('DOMContentLoaded', function () {
         window.scrollTo(0, 0);
 
         navLinks.forEach(link => {
-            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+            link.classList.toggle('active', link.dataset.section === id);
         });
 
         // Build the skills chart on first visit (a hidden canvas has no size)
         if (id === 'skills' && typeof window.initSkillsChart === 'function') {
             window.initSkillsChart();
         }
-
-        if (location.hash !== `#${id}`) {
-            history.pushState(null, '', `#${id}`);
-        }
     }
 
-    // Anchor clicks switch sections instead of smooth-scrolling
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return; // placeholder links
+    function goToSection(id) {
+        // Close mobile menu if open
+        if (!sidebar.classList.contains('-translate-x-full') && window.innerWidth < 768) {
+            toggleMenu();
+        }
+        showSection(id);
+    }
 
+    document.querySelectorAll('[data-section]').forEach(el => {
+        el.addEventListener('click', (e) => {
             e.preventDefault();
-
-            // Close mobile menu if open
-            if (!sidebar.classList.contains('-translate-x-full') && window.innerWidth < 768) {
-                toggleMenu();
+            goToSection(el.dataset.section);
+        });
+        el.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                goToSection(el.dataset.section);
             }
-
-            showSection(targetId.slice(1));
         });
     });
 
-    // Browser back/forward support
-    window.addEventListener('hashchange', () => showSection(location.hash.slice(1) || 'hero'));
-
-    // Show the section matching the URL hash (default: hero)
+    // Initial section, then strip any leftover hash so the URL stays pristine
     showSection(location.hash.slice(1) || 'hero');
+    history.replaceState(null, '', location.pathname + location.search);
 
     // --- Dynamic Copyright Year (handled in dynamic sidebar footer) ---
 
@@ -261,12 +259,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     </p>
 
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-                        <a href="#projects"
+                        <a data-section="projects" role="link" tabindex="0"
                             class="w-full sm:w-auto px-8 py-4 bg-indigo-600 text-white rounded-xl font-semibold shadow-lg shadow-indigo-500/30 hover:bg-indigo-700 hover:-translate-y-1 hover:shadow-xl transition-all flex items-center justify-center gap-2 group">
                             View Projects
                             <i class="ph-bold ph-arrow-right group-hover:translate-x-1 transition-transform"></i>
                         </a>
-                        <a href="#contact"
+                        <a data-section="contact" role="link" tabindex="0"
                             class="w-full sm:w-auto px-8 py-4 bg-white text-gray-800 border border-gray-200 rounded-xl font-semibold shadow-sm hover:border-indigo-200 hover:bg-indigo-50 hover:-translate-y-1 transition-all flex items-center justify-center gap-2">
                             Contact Me
                             <i class="ph-bold ph-paper-plane-right"></i>
@@ -1191,8 +1189,7 @@ document.addEventListener('DOMContentLoaded', function () {
     (function initMagneticButtons() {
         // Exclude problematic buttons from magnetic effect
         const magneticBtns = document.querySelectorAll(
-            'a[href="#projects"]:not(#mobile-menu-btn), \
-             a[href="#contact"]:not(#mobile-menu-btn), \
+            'a[data-section]:not(.sidebar-nav-link), \
              .linkedin-cta-btn:not(#mobile-menu-btn):not(#show-more-certifications)'
         );
 
