@@ -1864,3 +1864,8 @@ main.main-content > section#hero.active-section {
 @media (prefers-reduced-motion: reduce) {
     main.main-content > section.active-section { animation: none; }
 }
+
+/* ─── Anti right-click companion: suppress mobile long-press callout ─── */
+body {
+    -webkit-touch-callout: none;
+}

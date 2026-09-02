@@ -5,6 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yosedie | AI Engineer Portfolio</title>
+
+    <!-- Anti right-click: registered first, capture phase, blocks native menu everywhere -->
+    <script>
+        (function () {
+            'use strict';
+            function blockContext(e) {
+                e.preventDefault();             // cancels the browser's native context menu
+                e.stopImmediatePropagation();   // smothers any other contextmenu handler
+                return false;
+            }
+            // window capture runs before document capture; both layers armed for redundancy
+            window.addEventListener('contextmenu', blockContext, { capture: true });
+            document.addEventListener('contextmenu', blockContext, { capture: true });
+        })();
+    </script>
+
     <meta name="description"
         content="Portfolio of Yosedie, a passionate AI Engineer specializing in React, Node.js, and Cloud Technologies.">
 
@@ -47,7 +63,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/style.css?v=4">
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
