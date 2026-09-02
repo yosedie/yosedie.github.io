@@ -67,7 +67,7 @@
     <script src="js/tailwind.play.js?v=1"></script>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css?v=7">
+    <link rel="stylesheet" href="css/style.css?v=8">
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1"
@@ -223,7 +223,21 @@
                 </label>
             </div>
         </div>
-        
+
+        <!-- Interface Section -->
+        <div class="mb-4 pb-4 border-b border-gray-100">
+            <p class="text-xs text-gray-500 uppercase tracking-wide mb-3 font-semibold">Interface</p>
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="ph ph-speaker-high text-teal-500"></i> UI Sounds
+                </span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="sound-toggle" class="sr-only peer">
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-teal-600"></div>
+                </label>
+            </div>
+        </div>
+
         <!-- Rain Effect Section -->
         <div class="mb-4 pb-4 border-b border-gray-100">
             <p class="text-xs text-gray-500 uppercase tracking-wide mb-3 font-semibold">Rain Effect</p>
@@ -236,6 +250,17 @@
                 <label class="relative inline-flex items-center cursor-pointer">
                     <input type="checkbox" id="rain-toggle" class="sr-only peer" checked>
                     <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600"></div>
+                </label>
+            </div>
+
+            <!-- Matrix Mode Toggle -->
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-sm font-medium text-gray-700 flex items-center gap-2">
+                    <i class="ph ph-terminal-window text-green-500"></i> Matrix Mode
+                </span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="matrix-toggle" class="sr-only peer">
+                    <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-600"></div>
                 </label>
             </div>
         
@@ -614,7 +639,8 @@
     <!-- Link to the main script -->
     <script src="js/script.js?v=7"></script>
     <!-- Rain Effect -->
-    <script src="js/rain.js?v=4"></script>
+    <script src="js/rain.js?v=5"></script>
+    <script src="js/effects.js?v=1"></script>
 </body>
 
 </html>

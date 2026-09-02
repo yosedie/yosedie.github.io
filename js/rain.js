@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
         updateObstacles();
+        if (config.matrix) initMatrixColumns();
     }
 
     // Mouse Move Handler - Enhanced with velocity tracking
@@ -504,8 +505,53 @@ document.addEventListener('DOMContentLoaded', () => {
         adjustDropCount,
         toggleRain,
         resetWater,
-        getConfig: () => config
+        getConfig: () => config,
+        setMatrix: (on) => {
+            config.matrix = !!on;
+            if (config.matrix) initMatrixColumns();
+        }
     };
+
+    // --- Matrix Mode ---
+    const MATRIX_GLYPHS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789';
+    let matrixColumns = [];
+    function initMatrixColumns() {
+        matrixColumns = [];
+        const colWidth = 18;
+        const cols = Math.ceil(width / colWidth);
+        for (let i = 0; i < cols; i++) {
+            matrixColumns.push({
+                x: i * colWidth + colWidth / 2,
+                y: Math.random() * -height,
+                speed: 2 + Math.random() * 4,
+                glyphs: Array.from({ length: 14 }, () => MATRIX_GLYPHS[(Math.random() * MATRIX_GLYPHS.length) | 0])
+            });
+        }
+    }
+    function drawMatrix() {
+        ctx.clearRect(0, 0, width, height);
+        ctx.font = '14px "JetBrains Mono", monospace';
+        ctx.textAlign = 'center';
+        matrixColumns.forEach(col => {
+            for (let g = 0; g < col.glyphs.length; g++) {
+                const y = col.y - g * 16;
+                if (y < -16 || y > height + 16) continue;
+                const alpha = g === 0 ? 0.95 : 0.55 * (1 - g / col.glyphs.length);
+                ctx.fillStyle = g === 0
+                    ? 'rgba(190,255,210,' + alpha.toFixed(3) + ')'
+                    : 'rgba(74,222,128,' + alpha.toFixed(3) + ')';
+                ctx.fillText(col.glyphs[g], col.x, y);
+            }
+            col.y += col.speed;
+            if (Math.random() < 0.08) {
+                col.glyphs[(Math.random() * col.glyphs.length) | 0] = MATRIX_GLYPHS[(Math.random() * MATRIX_GLYPHS.length) | 0];
+            }
+            if (col.y - col.glyphs.length * 16 > height) {
+                col.y = -20 - Math.random() * 200;
+                col.speed = 2 + Math.random() * 4;
+            }
+        });
+    }
 
     // Animation Loop
     function animate() {
@@ -513,7 +559,14 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(animate);
             return;
         }
-        
+
+        // Matrix Mode — falling glyph columns replace raindrops
+        if (config.matrix) {
+            drawMatrix();
+            requestAnimationFrame(animate);
+            return;
+        }
+
         ctx.clearRect(0, 0, width, height);
 
         // Calculate Document Height
