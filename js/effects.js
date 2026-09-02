@@ -62,11 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!el || el.dataset.fxGlitch) return;
             el.dataset.fxGlitch = '1';
             el.classList.add('fx-glitchable');
-            el.setAttribute('data-text', el.textContent.replace(/\s+/g, ' ').trim());
             el.addEventListener('mouseenter', () => {
                 if (reduceMotion) return;
                 el.classList.add('fx-glitching');
-                setTimeout(() => el.classList.remove('fx-glitching'), 400);
+                setTimeout(() => el.classList.remove('fx-glitching'), 420);
             });
         });
     }
@@ -148,21 +147,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (term) term.classList.remove('open');
     }
 
-    /* ---------- 5. NEURAL CONSTELLATION — hero network canvas ---------- */
+    /* ---------- 5. NEURAL CONSTELLATION — global background network ---------- */
     function initConstellation() {
-        const hero = document.getElementById('hero');
-        if (!hero || reduceMotion) return;
         const canvas = document.createElement('canvas');
         canvas.id = 'fx-constellation';
-        canvas.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;';
-        hero.insertBefore(canvas, hero.firstChild);
+        canvas.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;';
+        document.body.insertBefore(canvas, document.body.firstChild);
         const ctx = canvas.getContext('2d');
         const dpr = Math.min(window.devicePixelRatio || 1, 2);
         let w = 0, h = 0, nodes = [];
         const mouse = { x: -9999, y: -9999 };
 
         function resize() {
-            w = hero.clientWidth; h = hero.clientHeight;
+            w = window.innerWidth; h = window.innerHeight;
             canvas.width = w * dpr; canvas.height = h * dpr;
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
             const count = Math.max(30, Math.min(70, Math.floor(w / 18)));
@@ -174,15 +171,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         resize();
         window.addEventListener('resize', resize);
-        hero.addEventListener('mousemove', (e) => {
-            const r = canvas.getBoundingClientRect();
-            mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
-        });
-        hero.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        document.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
 
         (function loop() {
             requestAnimationFrame(loop);
-            if (!hero.classList.contains('active-section') || document.hidden) return;
+            if (document.hidden) return;
             ctx.clearRect(0, 0, w, h);
             for (const n of nodes) {
                 n.x += n.vx; n.y += n.vy;

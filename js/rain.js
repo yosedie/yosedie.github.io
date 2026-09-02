@@ -529,7 +529,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     function drawMatrix() {
-        ctx.clearRect(0, 0, width, height);
+        // no clearRect here — glyphs render on top of the running rain frame
         ctx.font = '14px "JetBrains Mono", monospace';
         ctx.textAlign = 'center';
         matrixColumns.forEach(col => {
@@ -556,13 +556,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Animation Loop
     function animate() {
         if (!isEnabled) {
-            requestAnimationFrame(animate);
-            return;
-        }
-
-        // Matrix Mode — falling glyph columns replace raindrops
-        if (config.matrix) {
-            drawMatrix();
             requestAnimationFrame(animate);
             return;
         }
@@ -611,6 +604,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 splashes.splice(i, 1);
             }
         }
+
+        // Matrix glyph layer — optional overlay that rides on top of the rain
+        if (config.matrix) drawMatrix();
 
         requestAnimationFrame(animate);
     }
