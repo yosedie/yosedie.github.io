@@ -4,7 +4,7 @@ var portfolioData = {
         "title": "AI Engineer",
         "avatar": "https://github.com/yosedie.png",
         "heroHeading": "Hello, I'm <span class='bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-pink-600'>Yosedie</span>",
-        "heroDescription": "A passionate <span class='font-semibold text-indigo-600'>AI Engineer</span> crafting digital experiences. I build robust, scalable applications and thrive on exploring new frontiers in AI & Cloud technology.",
+        "heroDescription": "A passionate <span class='font-semibold text-indigo-600'>AI Engineer</span> building intelligent systems — computer vision, NLP, and LLMs — and securing them. I live at the intersection of AI and cybersecurity: making models powerful, then making them hard to attack.",
         "quote": "\"Leveraging the art of prompt engineering to secure AI models, ensuring safety through semantic precision rather than complex code\"",
         "email": "ryosedie@gmail.com",
         "github": "https://github.com/yosedie",
@@ -12,33 +12,33 @@ var portfolioData = {
         "linkedin": "https://www.linkedin.com/in/yosedie/"
     },
     "about": {
-        "heading": "Driven by <span class='text-gradient'>Innovation</span> & <br>Problem Solving",
+        "heading": "Driven by <span class='text-gradient'>Intelligence</span> & <br>Security",
         "paragraphs": [
-            "I am an AI Engineer with a strong foundation in building robust and scalable applications. My journey is defined by a curiosity for how things work and a desire to build solutions that matter. Whether it's optimizing a database query, designing a sleek user interface, or deploying a machine learning model, I approach every challenge with enthusiasm and attention to detail.",
-            "My goal is to create solutions that not only solve problems but also enhance the user experience and drive business growth through innovation and excellence. I am particularly interested in leveraging AI and machine learning to make a positive impact in various industries.",
+            "I am an AI Engineer focused on building intelligent systems — computer vision, NLP pipelines, and LLM-powered applications. On the other side of the fence, I study how those same systems break: prompt injection, adversarial inputs, and insecure deployments. Cybersecurity is the lens I bring to everything I ship.",
+            "My background combines machine learning engineering with hands-on security training — Cisco cybersecurity coursework, Google Cloud security paths, and secure AI research on semantic prompt defenses. I believe the future of AI belongs to people who can both build the models and defend them, and that intersection is where I work every day.",
         ],
         "highlights": [
-            { "icon": "ph-fill ph-code", "iconColor": "bg-indigo-100 text-indigo-600", "title": "Developer", "subtitle": "Full-stack capable" },
-            { "icon": "ph-fill ph-brain", "iconColor": "bg-pink-100 text-pink-600", "title": "Learner", "subtitle": "AI & ML Enthusiast" }
+            { "icon": "ph-fill ph-brain", "iconColor": "bg-indigo-100 text-indigo-600", "title": "AI Engineer", "subtitle": "CV · NLP · LLMs" },
+            { "icon": "ph-fill ph-shield-check", "iconColor": "bg-pink-100 text-pink-600", "title": "Security-Minded", "subtitle": "Secure AI & Cloud" }
         ],
         "quickFacts": [
-            "Enhancing platform for using AI and Machine Learning to improve customer experience and increase sales through personalized recommendations and optimized operations",
-            "Deepening knowledge in AI & Machine Learning through hands-on projects and self-study",
-            "Open to Open-Source Collaborations and Learning Opportunities to expand my knowledge and skills",
-            "Stack: Python, JavaScript, React, Google Cloud, and more. Currently learning TensorFlow and PyTorch for deep learning tasks. Specializing in building scalable and efficient AI models for various applications. Focusing on computer vision, and recommendation systems. Leveraging AI and Machine Learning to solve complex problems and drive innovation in various industries."
+            "Building AI-powered platforms at FEHA — computer vision pipelines and LLM features — designed with security as a first-class requirement",
+            "Cybersecurity foundation: Cisco cybersecurity badges, Google Cloud security paths, and ongoing self-study in AI red-teaming",
+            "Open to collaborations on AI, machine learning, and AI-security projects",
+            "Stack: Python, TensorFlow, PyTorch, OpenCV, and Google Cloud. Focused on computer vision, NLP, and making AI systems robust against real-world attacks."
         ]
     },
     "heroTechStack": [
-        { "name": "React", "iconClass": "devicon-react-original", "hoverColor": "#61DAFB" },
         { "name": "Python", "iconClass": "devicon-python-plain", "hoverColor": "#3776AB" },
-        { "name": "Node.js", "iconClass": "devicon-nodejs-plain", "hoverColor": "#339933" },
+        { "name": "TensorFlow", "iconClass": "devicon-tensorflow-original", "hoverColor": "#FF6F00" },
+        { "name": "PyTorch", "iconClass": "devicon-pytorch-original", "hoverColor": "#EE4C2C" },
         { "name": "Docker", "iconClass": "devicon-docker-plain", "hoverColor": "#2496ED" },
         { "name": "GCP", "iconClass": "devicon-googlecloud-plain", "hoverColor": "#4285F4" }
     ],
     "learning": [
-        { "title": "Advanced Algorithms & Data Structures", "description": "Focusing on efficiency, scalability, and optimization techniques.", "accentColor": "indigo" },
+        { "title": "AI Security & LLM Defense", "description": "Studying prompt injection, adversarial inputs, and defenses for LLM-powered systems.", "accentColor": "indigo" },
         { "title": "Machine Learning & AI", "description": "Completing Generative AI Learning Path course on Google Cloud Skills Boost.", "accentColor": "pink" },
-        { "title": "DevOps & Kubernetes", "description": "Improving CI/CD pipelines and container orchestration skills.", "accentColor": "amber" }
+        { "title": "Cloud & Network Security", "description": "Deepening Google Cloud security and network hardening skills.", "accentColor": "amber" }
     ],
     "skills": {
         "Languages": [
