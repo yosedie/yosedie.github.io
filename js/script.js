@@ -72,48 +72,53 @@ document.addEventListener('DOMContentLoaded', function () {
         overlay.addEventListener('click', toggleMenu);
     }
 
-    // --- Active Link Highlighting & Smooth Scroll ---
-    const sections = document.querySelectorAll('section');
+    // --- Per-menu Section Router: sidebar clicks swap the visible section ---
+    const sections = document.querySelectorAll('main > section');
     const navLinks = document.querySelectorAll('.sidebar-nav-link');
 
-    function highlightNavigation() {
-        let scrollPosition = window.scrollY + 100; // Offset
+    function showSection(id) {
+        const target = document.getElementById(id);
+        if (!target) return;
 
-        sections.forEach(section => {
-            if (scrollPosition >= section.offsetTop && scrollPosition < section.offsetTop + section.offsetHeight) {
-                const currentId = section.getAttribute('id');
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href') === `#${currentId}`) {
-                        link.classList.add('active');
-                    }
-                });
-            }
+        sections.forEach(s => s.classList.toggle('active-section', s === target));
+        window.scrollTo(0, 0);
+
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
         });
+
+        // Build the skills chart on first visit (a hidden canvas has no size)
+        if (id === 'skills' && typeof window.initSkillsChart === 'function') {
+            window.initSkillsChart();
+        }
+
+        if (location.hash !== `#${id}`) {
+            history.pushState(null, '', `#${id}`);
+        }
     }
 
-    window.addEventListener('scroll', highlightNavigation);
-
-    // Smooth scroll for anchor links
+    // Anchor clicks switch sections instead of smooth-scrolling
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
             const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
+            if (targetId === '#') return; // placeholder links
 
-            if (targetElement) {
-                // Close mobile menu if open
-                if (!sidebar.classList.contains('-translate-x-full') && window.innerWidth < 768) {
-                    toggleMenu();
-                }
+            e.preventDefault();
 
-                window.scrollTo({
-                    top: targetElement.offsetTop - 0,
-                    behavior: 'smooth'
-                });
+            // Close mobile menu if open
+            if (!sidebar.classList.contains('-translate-x-full') && window.innerWidth < 768) {
+                toggleMenu();
             }
+
+            showSection(targetId.slice(1));
         });
     });
+
+    // Browser back/forward support
+    window.addEventListener('hashchange', () => showSection(location.hash.slice(1) || 'hero'));
+
+    // Show the section matching the URL hash (default: hero)
+    showSection(location.hash.slice(1) || 'hero');
 
     // --- Dynamic Copyright Year (handled in dynamic sidebar footer) ---
 
@@ -137,9 +142,13 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(el);
     });
 
-    // --- Skills Chart (Chart.js) ---
-    const ctx = document.getElementById('skillsChart');
-    if (ctx && typeof Chart !== 'undefined') {
+    // --- Skills Chart (Chart.js) — built lazily on first Skills visit (a hidden canvas has no size) ---
+    window.initSkillsChart = function () {
+        if (document.body.dataset.skillsChartBuilt) return;
+        document.body.dataset.skillsChartBuilt = '1';
+
+        const ctx = document.getElementById('skillsChart');
+        if (!ctx || typeof Chart === 'undefined') return;
         // Gradient for bars
         const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 400, 0);
         gradient.addColorStop(0, 'rgba(79, 70, 229, 0.8)'); // Indigo
@@ -189,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         });
-    }
+    };
 
 
     // --- Dynamic Data Rendering ---

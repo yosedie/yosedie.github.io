@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.style.width = '100%';
     canvas.style.height = '100%';
     canvas.style.pointerEvents = 'none'; // Allow clicks to pass through
-    canvas.style.zIndex = '9999'; // On top of everything
+    canvas.style.zIndex = '1'; // Behind page content (main is z-10) so text stays readable
     document.body.appendChild(canvas);
 
     const ctx = canvas.getContext('2d');
