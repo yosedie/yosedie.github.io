@@ -1869,3 +1869,86 @@ main.main-content > section#hero.active-section {
 body {
     -webkit-touch-callout: none;
 }
+
+/* ─── Custom context menu (right-click) ─── */
+#ctx-menu {
+    position: fixed;
+    z-index: 10000;
+    min-width: 232px;
+    padding: 8px;
+    border-radius: 14px;
+    background: rgba(13, 17, 28, 0.85);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 18px 50px rgba(17, 24, 39, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.92) translateY(6px);
+    transition: opacity 0.18s ease, transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+    font-family: 'Inter', sans-serif;
+}
+#ctx-menu.ctx-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1) translateY(0);
+}
+#ctx-menu .ctx-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+}
+#ctx-menu .ctx-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.8);
+}
+#ctx-menu .ctx-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 9px 10px;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.88);
+    font: 500 13.5px/1.2 'Inter', sans-serif;
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+#ctx-menu .ctx-item i {
+    font-size: 17px;
+    color: #a5b4fc;
+    transition: color 0.15s ease, transform 0.15s ease;
+}
+#ctx-menu .ctx-item:hover {
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.25), rgba(236, 72, 153, 0.18));
+    color: #fff;
+    transform: translateX(3px);
+}
+#ctx-menu .ctx-item:hover i {
+    color: #f9a8d4;
+}
+#ctx-menu .ctx-sep {
+    height: 1px;
+    margin: 6px 4px;
+    background: rgba(255, 255, 255, 0.1);
+}
+#ctx-menu .ctx-footer {
+    padding: 8px 10px 4px;
+    font-size: 10.5px;
+    color: rgba(255, 255, 255, 0.38);
+    text-align: center;
+    letter-spacing: 0.06em;
+}

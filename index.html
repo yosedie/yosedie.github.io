@@ -13,6 +13,7 @@
             function blockContext(e) {
                 e.preventDefault();             // cancels the browser's native context menu
                 e.stopImmediatePropagation();   // smothers any other contextmenu handler
+                if (window.__ctxOpen) window.__ctxOpen(e); // hand over to the custom menu
                 return false;
             }
             // window capture runs before document capture; both layers armed for redundancy
@@ -63,7 +64,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css?v=4">
+    <link rel="stylesheet" href="css/style.css?v=5">
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -604,7 +605,7 @@
     <!-- Link to Data -->
     <script src="js/data.js?v=3"></script>
     <!-- Link to the main script -->
-    <script src="js/script.js?v=3"></script>
+    <script src="js/script.js?v=4"></script>
     <!-- Rain Effect -->
     <script src="js/rain.js?v=3"></script>
 </body>

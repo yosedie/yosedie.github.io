@@ -2069,3 +2069,48 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
+
+// --- 12. CUSTOM RIGHT-CLICK MENU ---
+(function initContextMenu() {
+    const menu = document.createElement('div');
+    menu.id = 'ctx-menu';
+    menu.setAttribute('role', 'menu');
+    menu.innerHTML = `
+        <div class="ctx-header"><span class="ctx-dot"></span>yosedie.dev</div>
+        <button type="button" class="ctx-item" data-section="hero"><i class="ph ph-house"></i>Home</button>
+        <button type="button" class="ctx-item" data-section="about"><i class="ph ph-user"></i>About Me</button>
+        <button type="button" class="ctx-item" data-section="skills"><i class="ph ph-code"></i>Skills</button>
+        <button type="button" class="ctx-item" data-section="projects"><i class="ph ph-rocket-launch"></i>Projects</button>
+        <button type="button" class="ctx-item" data-section="contact"><i class="ph ph-envelope"></i>Contact</button>
+        <div class="ctx-sep"></div>
+        <a class="ctx-item" href="https://github.com/yosedie" target="_blank" rel="noopener"><i class="ph ph-github-logo"></i>GitHub Profile</a>
+        <a class="ctx-item" href="https://www.linkedin.com/in/yosedie" target="_blank" rel="noopener"><i class="ph ph-linkedin-logo"></i>LinkedIn</a>
+        <div class="ctx-sep"></div>
+        <div class="ctx-footer">custom-built &middot; no default menus here</div>
+    `;
+    document.body.appendChild(menu);
+
+    window.__ctxOpen = function (e) {
+        menu.classList.add('ctx-open');
+        const w = menu.offsetWidth, h = menu.offsetHeight;
+        const x = Math.min(e.clientX, window.innerWidth - w - 12);
+        const y = Math.min(e.clientY, window.innerHeight - h - 12);
+        menu.style.left = Math.max(8, x) + 'px';
+        menu.style.top = Math.max(8, y) + 'px';
+    };
+
+    function close() { menu.classList.remove('ctx-open'); }
+
+    menu.addEventListener('click', function (e) {
+        const btn = e.target.closest('[data-section]');
+        close();
+        if (btn) {
+            const nav = document.querySelector('.sidebar-nav-link[data-section="' + btn.dataset.section + '"]');
+            if (nav) nav.click(); // reuse the existing section router
+        }
+    });
+    document.addEventListener('click', (e) => { if (!menu.contains(e.target)) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    window.addEventListener('blur', close);
+    window.addEventListener('resize', close);
+})();
