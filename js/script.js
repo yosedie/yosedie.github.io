@@ -341,12 +341,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 const fallbackBg = 'bg-gradient-to-br from-indigo-50 to-pink-50';
                 githubContainer.innerHTML = `
                     <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-100 overflow-hidden flex justify-center min-h-[180px] ${fallbackBg}">
-                        <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=${u}&show_icons=true&theme=transparent&title_color=4F46E5&text_color=4B5563&icon_color=EC4899&hide_border=true"
+                        <img src="https://raw.githubusercontent.com/yosedie/yosedie/main/profile-summary-card-output/github_light/3-stats.svg"
                             alt="GitHub Stats" class="max-w-full"
                             onerror="this.parentElement.innerHTML='<div class=\'flex items-center justify-center h-full text-gray-400\'><i class=\'ph ph-github-logo text-4xl\'></i><span class=\'ml-2\'>Stats loading...</span></div>'">
                     </div>
                     <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-100 overflow-hidden flex justify-center min-h-[180px] ${fallbackBg}">
-                        <img src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=${u}&layout=compact&theme=transparent&title_color=4F46E5&text_color=4B5563&hide_border=true"
+                        <img src="https://raw.githubusercontent.com/yosedie/yosedie/main/profile-summary-card-output/github_light/1-repos-per-language.svg"
                             alt="Top Languages" class="max-w-full"
                             onerror="this.parentElement.innerHTML='<div class=\'flex items-center justify-center h-full text-gray-400\'><i class=\'ph ph-code text-4xl\'></i><span class=\'ml-2\'>Languages loading...</span></div>'">
                     </div>
