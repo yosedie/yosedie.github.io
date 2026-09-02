@@ -1829,7 +1829,7 @@ main.main-content > section.active-section {
     flex-direction: column;
     height: 100vh;
     height: 100svh;
-    overflow-y: auto;
+    overflow: hidden auto;
     scrollbar-width: none;
     padding-top: 4vh;
     padding-bottom: 4vh;

@@ -523,9 +523,12 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.clientHeight, document.documentElement.clientHeight
         );
 
-        // Update Absolute Water Level
-        if (absoluteWaterLevel < docHeight) {
+        // Update Absolute Water Level — capped so it never floods the page
+        const maxWater = height * 0.28; // never higher than 28% of the viewport
+        if (absoluteWaterLevel < maxWater) {
             absoluteWaterLevel += config.waterRiseSpeed;
+        } else if (absoluteWaterLevel > maxWater) {
+            absoluteWaterLevel = Math.max(maxWater, absoluteWaterLevel - 0.05); // gentle drain back to cap
         }
         waveOffset += 0.05;
 
