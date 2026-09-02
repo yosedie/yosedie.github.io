@@ -1825,11 +1825,17 @@ main.main-content > section {
     display: none !important;
 }
 main.main-content > section.active-section {
-    display: block !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    min-height: 100svh;
     animation: section-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 main.main-content > section#hero.active-section {
-    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 @keyframes section-in {
     from { opacity: 0; transform: translateY(24px); }
